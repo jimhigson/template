@@ -24,6 +24,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "grunt test",
+    "predeploy": "grunt build",
     "start": "env NODE_ENV=production node src/server-side/index.js"
   },
   "repository": {

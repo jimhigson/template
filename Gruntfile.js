@@ -87,6 +87,7 @@ module.exports = function (grunt) {
    
    // start in DEV mode
    grunt.registerTask('start-dev', [
+      'build',
       'env:variables',
       'develop:devServer',
       'watch:sourceChanges'

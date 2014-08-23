@@ -6,7 +6,7 @@ var express = require('express'),
 
 var RAW_SCRIPTS = ['main.js'],
    SCRIPTS = development ? RAW_SCRIPTS : ['js/all.js'],
-   STYLES = ['all.css'];
+   STYLES =  development ? ['css/main.css'] : ['css-min/all.css'];
 
 module.exports = function routes(app) {
 

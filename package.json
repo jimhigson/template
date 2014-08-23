@@ -24,7 +24,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "grunt test",
-    "start": "env NODE_ENV=development node src/server-side/index.js"
+    "start": "env NODE_ENV=production node src/server-side/index.js"
   },
   "repository": {
     "type": "git",

@@ -11,7 +11,7 @@ routes(app);
 
 var port = config.port;
 
-console.log('Starting'.grey, 'website'.yellow, 'on port'.grey, String(port).yellow, 'for', process.env.NODE_ENV );
+console.log('Starting'.grey, 'website'.yellow, 'on port'.grey, String(port).yellow, 'for'.grey, process.env.NODE_ENV.yellow );
 
 app.listen(port);
 

@@ -1,0 +1,21 @@
+{
+  "name": "metapp",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jimhigson/metapp",
+  "authors": [
+    "Jim Higson <jim.higson@gmail.com>"
+  ],
+  "license": "(c) 2014 Jim Higson Software Consultancy Ltd",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/client-side/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  }
+}

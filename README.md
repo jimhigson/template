@@ -1,4 +1,4 @@
-metapp
+template app
 ======
 
 ```shell

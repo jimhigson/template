@@ -1,7 +1,7 @@
 {
   "name": "template",
   "version": "0.0.0",
-  "description": "metapp",
+  "description": "template",
   "main": "src/client-side/index.js",
   "directories": {
     "test": "test"
@@ -29,12 +29,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jimhigson/metapp.git"
+    "url": "git://github.com/jimhigson/template.git"
   },
   "author": "Jim Higson <jim.higson@gmail.com>",
   "license": "(c) Jim Higson Software Consultancy Ltd 2014 all rights reserved",
   "bugs": {
-    "url": "https://github.com/jimhigson/metapp/issues"
+    "url": "https://github.com/jimhigson/template/issues"
   },
-  "homepage": "https://github.com/jimhigson/metapp"
+  "homepage": "https://github.com/jimhigson/template"
 }

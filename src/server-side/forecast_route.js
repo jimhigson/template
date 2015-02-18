@@ -24,8 +24,9 @@ module.exports = function(app) {
             'percentiles.*.*': function(amount, path) {
                 var i = path[2];
                 var percentile = percentiles[path[1]];
+                var amountScaled = amount/100;
 
-                responseJson.series[i].percentiles[percentile] = amount;
+                responseJson.series[i].percentiles[percentile] = amountScaled;
             }
         })
         .done(function(){

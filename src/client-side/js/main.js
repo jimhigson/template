@@ -5,6 +5,8 @@ $(function() {
     oboe('sample_forecast.json')
         .done(function(json){
             chartView(document.getElementById('mainChart'), 900, 400, json);
+        }).fail(function(e){
+            console.log(e);
         });
 
 

@@ -21,13 +21,13 @@ function chartView(chartElement, w, h, model) {
                 return d.date;
             }));
 
-        var minMoney = d3.min(series, function(point) { return data.percentiles[10] });
-        var maxMoney = d3.max(series, function(point) { return data.percentiles[90] });
+        var minMoney = d3.min(series, function(point) { return point.percentiles[10] });
+        var maxMoney = d3.max(series, function(point) { return point.percentiles[90] });
 
         var moneyDomain = [minMoney, maxMoney];
 
         var yScale = d3.scale.linear()
-            .range([dimensions.h - margin.top - margin.bottom, 0])
+            .range([dimensions.h - MARGIN.top - MARGIN.bottom, 0])
             .domain(moneyDomain);
 
         return {
@@ -36,7 +36,7 @@ function chartView(chartElement, w, h, model) {
         }
     }
 
-    //var scales = createScales( model.series );
+    var scales = createScales( model.series );
 
     console.log('chartView: creating chart at element', chartElement, 'for data', model);
 

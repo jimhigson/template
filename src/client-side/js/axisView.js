@@ -4,23 +4,24 @@ function xAxisView(element, visWin) {
 
     console.log('drawing x scale', visWin.x, 'as an axis on', element);
 
-    var ticks = element.selectAll('.tick')
-                    .data(visWin.x.ticks(8))
-
     var yRange = visWin.y.range();
+    var yMin = yRange[0];
+    var yMax = yRange[1];
+
+    var ticks = element.selectAll('.tick')
+                    .data(visWin.x.ticks(8));
 
     var newTicks = ticks.enter()
             .append('svg:g')
                 .attr('class', 'tick major')
                 .attr('transform', function(date){ return translateX( visWin.x(date) ) });
-
     newTicks
         .append('svg:line')
-            .attr('y1', yRange[0])
-            .attr('y2', yRange[1]);
+            .attr('y1', yMin)
+            .attr('y2', yMax);
     newTicks
         .append('svg:text')
-        .attr('transform', translateXY(0, yRange[1]))
+        .attr('transform', translateXY(0, yMax))
         .attr('dy', 15)
         .text(YEAR_ONLY_FORMAT);
 
@@ -42,6 +43,8 @@ function yAxisView(element, visWin) {
                     .data(visWin.y.ticks(3));
 
     var xRange = visWin.x.range();
+    var xMinPx = xRange[0];
+    var xMaxPx = xRange[1];
 
     var newTicks = ticks.enter()
             .append('svg:g')
@@ -50,13 +53,20 @@ function yAxisView(element, visWin) {
 
     newTicks
         .append('svg:line')
-            .attr('x1', xRange[0])
-            .attr('x2', xRange[1]);
+            .attr('x1', xMinPx)
+            .attr('x2', xMaxPx);
 
-    var newLabels = newTicks
+    newTicks
         .append('svg:g')
         .attr('class', 'label')
-        .attr('transform', translateX(visWin.x.range()[0]));
+        .attr('transform', translateX(xMinPx));
+
+    newTicks
+        .append('svg:g')
+        .attr('class', 'label')
+        .attr('transform', translateX(interpolateBetweenPair(xRange, 0.9)));
+
+    var newLabels = newTicks.selectAll('g.label');
 
     newLabels
         .append('svg:rect')

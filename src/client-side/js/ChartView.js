@@ -2,7 +2,7 @@
 
 function chartView(chartElement, w, h, model) {
 
-    var MARGIN = {top: 10, right: 10, bottom: 50, left: 150};
+    var MARGIN = {top: 10, right: 0, bottom: 50, left: 150};
 
     var dimensions = {
         width: w,
@@ -24,6 +24,16 @@ function chartView(chartElement, w, h, model) {
 
     xAxisView(d3.select('.axes .x'), visWin);
     yAxisView(d3.select('.axes .y'), visWin);
+
+    dChart.select('.chartArea')
+        .attr({
+            x: visWin.x.range()[0],
+            width: pairExtent(visWin.x.range()),
+            y: visWin.y.range()[0],
+            height: pairExtent(visWin.y.range())
+        });
+
+
 
     var dataArea = dChart.select('.data');
 

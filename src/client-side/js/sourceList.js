@@ -7,5 +7,6 @@ module.exports = [
    'src/client-side/js/chartView.js',
    'src/client-side/js/axisView.js',
    'src/client-side/js/visibleWindow.js',
-   'src/client-side/js/svgUtils.js'
+   'src/client-side/js/svgUtils.js',
+   'src/client-side/js/pairs.js'
 ];

@@ -15,21 +15,36 @@ body {
 
 #mainChart {
 
-  .tick.major line {
-    stroke: $chartMajorLine;
-    stroke-width: 2;
-  }
+  .axes {
+    .chartArea {
+      fill: none;
+      stroke: #B7C8D0;
+    }
 
-  .tick text {
-    fill: $chartMajorLine;
-  }
+    .tick text {
+      fill: $chartMajorLine;
+    }
 
-  .x .tick text {
-    text-anchor: middle;
-  }
+    .x {
+      .tick.major line {
+        stroke: $chartMinorLine;
+        stroke-width: 2;
+      }
+      .tick text {
+        text-anchor: middle;
+      }
+    }
 
-  .y .tick text {
-    text-anchor: middle;
+    .y {
+      .tick {
+        line {
+          stroke: $chartMajorLine;
+        }
+        text {
+          text-anchor: middle;
+        }
+      }
+    }
   }
 
   #backgroundGradient stop.top {
@@ -44,5 +59,11 @@ body {
 
   .bg {
     fill: url('#backgroundGradient');
+  }
+
+  .label rect {
+    fill: $chartBgDark;
+    stroke: $chartMajorLine;
+    stroke-width: 1.5px;
   }
 }

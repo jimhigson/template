@@ -17,7 +17,6 @@ function visibleWindow(dimensions, MARGIN, series) {
         return d3.scale.linear()
             .range([MARGIN.top, dimensions.height - MARGIN.bottom])
             .domain(moneyDomain);
-
     }
 
     return {

@@ -17,11 +17,12 @@ grunt build
 TODO
 ====
 
-* [ ] load data in sensible format
+* [x] load data in sensible format
     * [ ] group goals by id on load
 * [ ] render axes
     * [ ] years and minor ticks
 * [ ] render median
+* [ ]   render median in model space
 * [ ] render other percentiles
 * [ ] render goals
 * [ ]   two sizes depending on zoom

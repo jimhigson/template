@@ -5,7 +5,7 @@ var oboe = require('oboe'),
 module.exports = function(app) {
 
     var responseJson = {
-        data:[]
+        series:[]
     };
 
     var percentiles = [10,30,50,70,90];
@@ -16,7 +16,7 @@ module.exports = function(app) {
                 responseJson.goals = goals;
             },
             'dates.*': function(date) {
-                responseJson.data.push({
+                responseJson.series.push({
                     date: date,
                     percentiles: {}
                 });
@@ -25,7 +25,7 @@ module.exports = function(app) {
                 var i = path[2];
                 var percentile = percentiles[path[1]];
 
-                responseJson.data[i].percentiles[percentile] = amount;
+                responseJson.series[i].percentiles[percentile] = amount;
             }
         })
         .done(function(){

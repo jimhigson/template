@@ -2,7 +2,7 @@
 
 function chartView(chartElement, w, h, model) {
 
-    var MARGIN = {top: 10, right: 10, bottom: 50, left: 50};
+    var MARGIN = {top: 10, right: 10, bottom: 50, left: 150};
 
     var dimensions = {
         width: w,
@@ -14,35 +14,16 @@ function chartView(chartElement, w, h, model) {
         dChart.select('rect.bg').attr(dimensions);
     }
 
-    function createScales( series ) {
-        var xScale = d3.time.scale()
-            .range([0, dimensions.w - MARGIN.left - MARGIN.right], 0, 0)
-            .domain(d3.extent(series, function (d) {
-                return d.date;
-            }));
-
-        var minMoney = d3.min(series, function(point) { return point.percentiles[10] });
-        var maxMoney = d3.max(series, function(point) { return point.percentiles[90] });
-
-        var moneyDomain = [minMoney, maxMoney];
-
-        var yScale = d3.scale.linear()
-            .range([dimensions.h - MARGIN.top - MARGIN.bottom, 0])
-            .domain(moneyDomain);
-
-        return {
-            x:xScale,
-            y:yScale
-        }
-    }
-
-    var scales = createScales( model.series );
+    var visWin = visibleWindow(dimensions, MARGIN, model.series);
 
     console.log('chartView: creating chart at element', chartElement, 'for data', model);
 
     var dChart = d3.select(chartElement);
 
     setDimensions(dChart, dimensions);
+
+    xAxisView(d3.select('.axes .x'), visWin);
+    yAxisView(d3.select('.axes .y'), visWin);
 
     var dataArea = dChart.select('.data');
 

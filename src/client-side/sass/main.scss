@@ -13,16 +13,36 @@ body {
   background: white;
 }
 
-#backgroundGradient stop.top {
-  stop-color: #003C57;
-  stop-opacity: 1;
-}
+#mainChart {
 
-#backgroundGradient stop.bottom {
-  stop-color: #004C6D;
-  stop-opacity: 1;
-}
+  .tick.major line {
+    stroke: $chartMajorLine;
+    stroke-width: 2;
+  }
 
-.bg {
-  fill: url('#backgroundGradient');
+  .tick text {
+    fill: $chartMajorLine;
+  }
+
+  .x .tick text {
+    text-anchor: middle;
+  }
+
+  .y .tick text {
+    text-anchor: middle;
+  }
+
+  #backgroundGradient stop.top {
+    stop-color: #003C57;
+    stop-opacity: 1;
+  }
+
+  #backgroundGradient stop.bottom {
+    stop-color: #004C6D;
+    stop-opacity: 1;
+  }
+
+  .bg {
+    fill: url('#backgroundGradient');
+  }
 }

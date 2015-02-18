@@ -30,12 +30,15 @@ body {
       fill: white;
     }
 
-    .x {
-      .tick.major line {
+    .x .tick {
+      line {
         stroke: $chartMinorLine;
-        stroke-width: 2;
+        stroke-width: 1;
       }
-      .tick text {
+      line.extend {
+        stroke: white;
+      }
+      text {
         text-anchor: middle;
       }
     }

@@ -15,14 +15,22 @@ function xAxisView(element, visWin) {
             .append('svg:g')
                 .attr('class', 'tick major')
                 .attr('transform', function(date){ return translateX(Math.round(visWin.x(date))) });
+
     newTicks
         .append('svg:line')
             .attr('y1', yMin)
             .attr('y2', yMax);
+
+    newTicks
+        .append('svg:line')
+            .attr('class', 'extend')
+            .attr('y1', yMin)
+            .attr('y2', yMin + 20);
+
     newTicks
         .append('svg:text')
         .attr('transform', translateXY(0, yMin))
-        .attr('dy', 15)
+        .attr('dy', 33)
         .text(YEAR_ONLY_FORMAT);
 
     ticks.exit().remove();

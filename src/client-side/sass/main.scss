@@ -49,13 +49,15 @@ body {
     }
 
     .y {
-      .tick {
-        line {
-          stroke: $chartMajorLine;
-        }
-        text {
-          text-anchor: middle;
-        }
+      text {
+        text-anchor: middle;
+      }
+
+      .major .tick line{
+        stroke: $chartMajorLine;
+      }
+      .minor .tick line{
+        stroke: $chartMinorLine;
       }
     }
   }

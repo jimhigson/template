@@ -50,8 +50,16 @@ body {
   .data {
     .median path {
       stroke: #FDFEFF;
-      stroke-width:1.5;
+      stroke-width:2;
       fill: none;
+    }
+    .lessLikely path {
+      stroke:none;
+      fill: $shadingLessLikely;
+    }
+    .moreLikely path {
+      stroke:none;
+      fill: $shadingMoreLikely;
     }
   }
 

@@ -20,8 +20,15 @@ var dataRenderer = (function() {
             .attr("d", line(series) );
     }
 
-    function areaRenderer(element, visWin, series, upperPercentile, lowerPercentile) {
+    function areaRenderer(element, visWin, series, lowerPercentile, upperPercentile) {
+        var area = d3.svg.area()
+            .x(xComponent(visWin.x))
+            .y0(yComponent(visWin.y, lowerPercentile))
+            .y1(yComponent(visWin.y, upperPercentile));
 
+        element.append('svg:path')
+            .data(series)
+            .attr("d", area(series) );
     }
 
     return {

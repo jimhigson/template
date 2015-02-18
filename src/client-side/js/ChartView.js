@@ -35,6 +35,8 @@ function chartView(chartElement, w, h, model) {
         });
 
     dataRenderer.line(dChart.select('.data .median'), visWin, model.series, 50);
+    dataRenderer.area(dChart.select('.data .moreLikely'), visWin, model.series, 30, 70);
+    dataRenderer.area(dChart.select('.data .lessLikely'), visWin, model.series, 10, 90);
 
     return {};
 }

@@ -3,11 +3,13 @@
 var express = require('express'),
    app = express(),
    config = require('config'),
-   routes = require('./routes.js');
+   routes = require('./routes.js'),
+   forecastRoutes = require('./forecast_route.js');
 
 require('colors');
 
 routes(app);
+forecastRoutes(app);
 
 var port = config.port;
 

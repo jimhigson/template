@@ -1,0 +1,53 @@
+{
+  "forecast": {
+    "parameters": {
+      "dateOfBirth": "1979-09",
+      "startDate": "2014-09",
+      "forecastPeriodInYears": 40
+    },
+    "accounts": [
+      {
+        "id": 1,
+        "type": "GIA",
+        "value": 500000
+      }
+    ],
+    "goals": [
+      {
+        "id": 1,
+        "amount": 20000,
+        "startDate": "2017-04"
+      },
+      {
+        "id": 2,
+        "amount": 20000,
+        "startDate": "2019-04"
+      },
+      {
+        "id": 3,
+        "amount": 20000,
+        "startDate": "2021-04"
+      },
+      {
+        "id": 4,
+        "amount": 20000,
+        "startDate": "2023-04"
+      },
+      {
+        "id": 5,
+        "amount": 20000,
+        "startDate": "2025-04",
+        "periodInMonths": 12,
+        "endDate": "2030-04"
+      }
+    ],
+    "contributions": [
+      {
+        "accountId": 1,
+        "amount": 2000,
+        "startDate": "2018-02",
+        "periodInMonths": 1
+      }
+    ]
+  }
+}

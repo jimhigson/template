@@ -19,7 +19,7 @@
     "grunt-env": "^0.4.1",
     "grunt-sass": "^0.14.0",
     "handlebars": "^2.0.0-alpha.4",
-    "oboe": "^1.15.1"
+    "oboe": "^2.1.1"
   },
   "devDependencies": {},
   "scripts": {

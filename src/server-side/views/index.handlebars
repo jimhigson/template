@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>MetApp</title>
+    <title>Chart Prototype</title>
 
    {{#each stylesheets}}
        <link rel="stylesheet" href="{{this}}">
@@ -16,7 +16,30 @@
 </head>
 
 <body>
+   <svg id="mainChart">
+       <defs>
+           <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+               <stop class="top" offset="0%" />
+               <stop class="bottom" offset="100%" />
+           </linearGradient>
+       </defs>
 
-   Hello there!
+       <g class="axes">
+           <g class="x"></g>
+           <g class="y"></g>
+       </g>
+
+       <g class="data-overlay">
+           <rect></rect>
+           <rect></rect>
+       </g>
+
+       <g class="data">
+       </g>
+
+       <rect class="bg"
+             width="800" height="600" x="0" y="0"
+       ></rect>
+   </svg>
 </body>
 </html>

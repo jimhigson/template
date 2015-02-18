@@ -83,7 +83,7 @@ module.exports = function (grunt) {
    grunt.loadNpmTasks('grunt-contrib-uglify');
    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-   grunt.registerTask('build', ['sass:all', 'uglify:clientSideJs', 'cssmin:minifyCss']);
+   grunt.registerTask('build', ['sass:all', 'cssmin:minifyCss']);
    
    // start in DEV mode
    grunt.registerTask('start-dev', [

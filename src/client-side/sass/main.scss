@@ -1,6 +1,28 @@
-$some-red: #DA061C;
+$chartBgDark: #003C57;
+$chartBgLight: #004C6D;
+
+$chartMajorLine: #B7C8D0;
+$chartMinorLine: #37768F;
+
+$shadingCertain: #8FADBC;
+$shadingUncertain: #57899E;
+
+$medianLine: #FDFEFF;
 
 body {
-  background: $some-red;
-  color: white;
+  background: white;
+}
+
+#backgroundGradient stop.top {
+  stop-color: #003C57;
+  stop-opacity: 1;
+}
+
+#backgroundGradient stop.bottom {
+  stop-color: #004C6D;
+  stop-opacity: 1;
+}
+
+.bg {
+  fill: url('#backgroundGradient');
 }

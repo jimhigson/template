@@ -1,4 +1,4 @@
-metapp
+Chart proto
 ======
 
 ```shell
@@ -13,3 +13,21 @@ grunt start-dev
 grunt build
 
 ```
+
+TODO
+====
+
+* [ ] load data in sensible format
+    * [ ] group goals by id on load
+* [ ] render axes
+    * [ ] years and minor ticks
+* [ ] render median
+* [ ] render other percentiles
+* [ ] render goals
+* [ ]   two sizes depending on zoom
+* [ ] pseudo-clip rendering
+* [ ] panning
+* [ ] zooming
+* [ ] draggable goals?
+
+* [ ] Split into SVG and 'the drawer'

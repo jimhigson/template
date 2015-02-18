@@ -1,7 +1,8 @@
 function xAxisView(element, visWin) {
 
     var YEAR_ONLY_FORMAT = d3.time.format('%Y');
-    var NUMBER_X_TICKS = 8;
+    var numberMajorTicks = pairExtent( visWin.x.range() ) / 100;
+    var numberMinorTicks = pairExtent( visWin.x.range() ) / 20;
 
     console.log('drawing x scale', visWin.x, 'as an axis on', element);
 
@@ -12,12 +13,12 @@ function xAxisView(element, visWin) {
     var majorTicks = element
                         .select('g.major')
                         .selectAll('.tick')
-                        .data(visWin.x.ticks(NUMBER_X_TICKS));
+                        .data(visWin.x.ticks(numberMajorTicks));
 
     var minorTicks = element
                         .select('g.minor')
                         .selectAll('.tick')
-                        .data(visWin.x.ticks(NUMBER_X_TICKS * 5));
+                        .data(visWin.x.ticks(numberMinorTicks));
 
     function tickTranslate(date) {
         return translateX(Math.round(visWin.x(date)));
@@ -102,16 +103,16 @@ function yAxisView(element, visWin) {
         .append('svg:rect')
         .attr({
             x: "-35",
-            y: "-10",
+            y: "-12",
             rx: LABEL_ROUNDING,
             ry: LABEL_ROUNDING,
             width: "70",
-            height: "25"
+            height: "24"
         });
 
     newLabels
         .append('svg:text')
-            .attr('dy', 7)
+            .attr('dy', 5)
             .text(moneyFormat);
 
     ticks.exit().remove();

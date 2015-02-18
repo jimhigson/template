@@ -14,7 +14,7 @@ function xAxisView(element, visWin) {
     var newTicks = ticks.enter()
             .append('svg:g')
                 .attr('class', 'tick major')
-                .attr('transform', function(date){ return translateX( visWin.x(date) ) });
+                .attr('transform', function(date){ return translateX(Math.round(visWin.x(date))) });
     newTicks
         .append('svg:line')
             .attr('y1', yMin)
@@ -49,7 +49,7 @@ function yAxisView(element, visWin) {
     var newTicks = ticks.enter()
             .append('svg:g')
                 .attr('class', 'tick major')
-                .attr('transform', function(moneyAmount){ return translateXY(0, visWin.y(moneyAmount)) });
+                .attr('transform', function(moneyAmount){ return translateXY(0, Math.round(visWin.y(moneyAmount))) });
 
     newTicks
         .append('svg:line')
@@ -59,12 +59,12 @@ function yAxisView(element, visWin) {
     newTicks
         .append('svg:g')
         .attr('class', 'label')
-        .attr('transform', translateX(interpolateBetweenPair(xRange, 0.1)));
+        .attr('transform', translateX(Math.round(interpolateBetweenPair(xRange, 0.1))));
 
     newTicks
         .append('svg:g')
         .attr('class', 'label')
-        .attr('transform', translateX(interpolateBetweenPair(xRange, 0.9)));
+        .attr('transform', translateX(Math.round(interpolateBetweenPair(xRange, 0.9))));
 
     var newLabels = newTicks.selectAll('g.label');
 

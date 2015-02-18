@@ -1,52 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Chart Prototype</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Chart Prototype</title>
 
-   {{#each stylesheets}}
-       <link rel="stylesheet" href="{{this}}">
-   {{/each}}
+        {{#each stylesheets}}
+            <link rel="stylesheet" href="{{this}}">
+        {{/each}}
 
-   {{#each scripts}}
-       <script type="text/javascript" src="{{this}}"></script>
-   {{/each}}
+        {{#each scripts}}
+            <script type="text/javascript" src="{{this}}"></script>
+        {{/each}}
 
-</head>
+    </head>
 
-<body>
-   <svg id="mainChart" width="1" height="1">
-       <defs>
-           <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-               <stop class="top" offset="0%" />
-               <stop class="bottom" offset="100%" />
-           </linearGradient>
-       </defs>
+    <body>
+        <svg id="mainChart" width="1" height="1">
+            <defs>
+                <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop class="top" offset="0%"/>
+                    <stop class="bottom" offset="100%"/>
+                </linearGradient>
+            </defs>
 
-       <g transform="translate(0.5,0.5)">
-           <rect class="bg"
-                 width="800" height="600" x="0" y="0"
-           ></rect>
+            <g transform="translate(0.5,0.5)">
+                <rect class="bg"
+                      width="800" height="600" x="0" y="0"
+                        ></rect>
 
-           <g class="data">
-           </g>
+                <g class="data">
+                    <g class="median"></g>
+                    <g class="moreLikely"></g>
+                    <g class="lessLikely"></g>
+                </g>
 
-           <g class="data-overlay">
-               <rect></rect>
-               <rect></rect>
-           </g>
+                <g class="data-overlay">
+                    <rect></rect>
+                    <rect></rect>
+                </g>
 
-           <g class="axes">
-               <rect class="chartArea"></rect>
-               <g class="x">
-                   <line class="baseline"></line>
-               </g>
-               <g class="y">
-                   <line class="baseline"></line>
-               </g>
-           </g>
-       </g>
-   </svg>
-</body>
+                <g class="axes">
+                    <rect class="chartArea"></rect>
+                    <g class="x">
+                        <line class="baseline"></line>
+                    </g>
+                    <g class="y">
+                        <line class="baseline"></line>
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </body>
 </html>

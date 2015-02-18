@@ -19,6 +19,7 @@ function chartView(chartElement, w, h, model) {
     console.log('chartView: creating chart at element', chartElement, 'for data', model);
 
     var dChart = d3.select(chartElement);
+//                    .data(model);
 
     setDimensions(dChart, dimensions);
 
@@ -33,9 +34,7 @@ function chartView(chartElement, w, h, model) {
             height: pairExtent(visWin.y.range())
         });
 
-
-
-    var dataArea = dChart.select('.data');
+    //lineRenderer(dChart.select('.data .median'), visWin, model.series);
 
     return {};
 }

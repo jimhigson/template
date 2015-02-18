@@ -59,7 +59,7 @@ function yAxisView(element, visWin) {
     newTicks
         .append('svg:g')
         .attr('class', 'label')
-        .attr('transform', translateX(xMinPx));
+        .attr('transform', translateX(interpolateBetweenPair(xRange, 0.1)));
 
     newTicks
         .append('svg:g')

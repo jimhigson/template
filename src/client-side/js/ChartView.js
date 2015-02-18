@@ -2,7 +2,7 @@
 
 function chartView(chartElement, w, h, model) {
 
-    var MARGIN = {top: 10, right: 0, bottom: 50, left: 150};
+    var MARGIN = {top: 2, right: 0, bottom: 50, left: 0};
 
     var dimensions = {
         width: w,

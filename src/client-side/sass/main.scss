@@ -1,8 +1,8 @@
 $chartBgDark: #003C57;
 $chartBgLight: #004C6D;
 
-$chartMajorLine: #B7C8D0;
-$chartMinorLine: #37768F;
+$chartMajorLine: rgba(255, 255, 255, 0.6);
+$chartMinorLine: rgba(255, 255, 255, 0.3);
 
 $shadingMoreLikely: #8FADBC;
 $shadingLessLikely: #57899E;
@@ -97,7 +97,7 @@ body {
 
   .label rect {
     fill: $chartBgDark;
-    stroke: $chartMajorLine;
+    stroke: $chartMinorLine;
     stroke-width: 1.5px;
   }
 }

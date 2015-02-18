@@ -34,7 +34,7 @@ function chartView(chartElement, w, h, model) {
             height: pairExtent(visWin.y.range())
         });
 
-    //lineRenderer(dChart.select('.data .median'), visWin, model.series);
+    dataRenderer.line(dChart.select('.data .median'), visWin, model.series, 50);
 
     return {};
 }

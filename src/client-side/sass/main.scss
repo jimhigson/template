@@ -47,6 +47,14 @@ body {
     }
   }
 
+  .data {
+    .median path {
+      stroke: #FDFEFF;
+      stroke-width:1.5;
+      fill: none;
+    }
+  }
+
   #backgroundGradient stop.top {
     stop-color: #003C57;
     stop-opacity: 1;

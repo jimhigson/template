@@ -21,7 +21,7 @@ function xAxisView(element, visWin) {
             .attr('y2', yMax);
     newTicks
         .append('svg:text')
-        .attr('transform', translateXY(0, yMax))
+        .attr('transform', translateXY(0, yMin))
         .attr('dy', 15)
         .text(YEAR_ONLY_FORMAT);
 

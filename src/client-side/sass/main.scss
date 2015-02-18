@@ -11,6 +11,11 @@ $medianLine: #FDFEFF;
 
 body {
   background: mix(#003C57, #004C6D, 50%);
+
+
+   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+   font-weight: 300;
+   font-size:90%;
 }
 
 #mainChart {
@@ -22,7 +27,7 @@ body {
     }
 
     .tick text {
-      fill: $chartMajorLine;
+      fill: white;
     }
 
     .x {
@@ -60,6 +65,16 @@ body {
     .moreLikely path {
       stroke:none;
       fill: $shadingMoreLikely;
+    }
+  }
+
+  .startLine {
+    line {
+      stroke: white;
+      stroke-width: 2;
+    }
+    circle {
+      fill:white;
     }
   }
 

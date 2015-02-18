@@ -9,5 +9,6 @@ module.exports = [
    'src/client-side/js/visibleWindow.js',
    'src/client-side/js/svgUtils.js',
    'src/client-side/js/pairs.js',
-   'src/client-side/js/dataRenderer.js'
+   'src/client-side/js/dataRenderer.js',
+   'src/client-side/js/startLine.js'
 ];

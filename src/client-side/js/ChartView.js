@@ -29,10 +29,12 @@ function chartView(chartElement, w, h, model) {
     dChart.select('.chartArea')
         .attr({
             x: visWin.x.range()[0],
-            width: pairExtent(visWin.x.range()),
-            y: visWin.y.range()[0],
-            height: pairExtent(visWin.y.range())
+            width: Math.abs(pairExtent(visWin.x.range())),
+            y: visWin.y.range()[1],
+            height: Math.abs(pairExtent(visWin.y.range()))
         });
+
+    startLine(dChart.select('.startLine'), visWin, model.series);
 
     dataRenderer.line(dChart.select('.data .median'), visWin, model.series, 50);
     dataRenderer.area(dChart.select('.data .moreLikely'), visWin, model.series, 30, 70);

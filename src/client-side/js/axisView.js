@@ -1,6 +1,7 @@
 function xAxisView(element, visWin) {
 
     var YEAR_ONLY_FORMAT = d3.time.format('%Y');
+    var NUMBER_X_TICKS = 8;
 
     console.log('drawing x scale', visWin.x, 'as an axis on', element);
 
@@ -8,32 +9,53 @@ function xAxisView(element, visWin) {
     var yMin = yRange[0];
     var yMax = yRange[1];
 
-    var ticks = element.selectAll('.tick')
-                    .data(visWin.x.ticks(8));
+    var majorTicks = element
+                        .select('g.major')
+                        .selectAll('.tick')
+                        .data(visWin.x.ticks(NUMBER_X_TICKS));
 
-    var newTicks = ticks.enter()
+    var minorTicks = element
+                        .select('g.minor')
+                        .selectAll('.tick')
+                        .data(visWin.x.ticks(NUMBER_X_TICKS * 5));
+
+    function tickTranslate(date) {
+        return translateX(Math.round(visWin.x(date)));
+    }
+
+    function initTickGroups(sel) {
+        return sel.enter()
             .append('svg:g')
-                .attr('class', 'tick major')
-                .attr('transform', function(date){ return translateX(Math.round(visWin.x(date))) });
+                .attr('class', 'tick')
+                .attr('transform', tickTranslate);
+    }
 
-    newTicks
+    var newMajorTicks = initTickGroups(majorTicks);
+    var newMinorTicks = initTickGroups(minorTicks);
+
+    newMajorTicks
         .append('svg:line')
             .attr('y1', yMin)
             .attr('y2', yMax);
 
-    newTicks
-        .append('svg:line')
-            .attr('class', 'extend')
-            .attr('y1', yMin)
-            .attr('y2', yMin + 20);
+    function addTickExtension(sel, size) {
+        sel
+            .append('svg:line')
+                .attr('class', 'extend')
+                .attr('y1', yMin)
+                .attr('y2', yMin + size);
+    }
 
-    newTicks
+    addTickExtension(newMajorTicks, 15);
+    addTickExtension(newMinorTicks, 7);
+
+    newMajorTicks
         .append('svg:text')
         .attr('transform', translateXY(0, yMin))
-        .attr('dy', 33)
+        .attr('dy', 30)
         .text(YEAR_ONLY_FORMAT);
 
-    ticks.exit().remove();
+    majorTicks.exit().remove();
 
     return {};
 }

@@ -12,13 +12,18 @@ function yAxisView(element, visWin) {
         return '£' + Math.round(amount/1000) + 'k';
     };
 
-    var majorTickValues = visWin.y.ticks(numberMajorTicks);
+    function notZero(tick){
+        return tick > 0;
+    }
+
+    var majorTickValues = visWin.y.ticks(numberMajorTicks).filter(notZero);
     var majorTicks = element
         .select('.major')
         .selectAll('.tick')
         .data(majorTickValues);
 
-    var minorTickValues = _.remove(visWin.y.ticks(numberMinorTicks), function(t){return !~majorTickValues.indexOf(t)});
+    var minorTickValues = _.remove(visWin.y.ticks(numberMinorTicks), function(t){return !~majorTickValues.indexOf(t)})
+                            .filter(notZero);
     var minorTicks = element
                     .select('.minor')
                     .selectAll('.tick')

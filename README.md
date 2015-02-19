@@ -27,11 +27,11 @@ TODO
 * [ ] render goals
     * [ ] group goals by id on load
     * [ ]   two sizes depending on zoom
-* [ ] pseudo-clip rendering
-* [ ] panning via drag
-    * [ ] initially show 10 years?
+* [ ] ---pseudo-clip rendering---
+* [x] panning via drag
+    * [x] initially show 10 years?
     * [ ] and with arrows
-* [ ] zooming
+* [x] zooming
 * [ ] draggable goals?
 
 * [ ] Split into SVG and 'the drawer'

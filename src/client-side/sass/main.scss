@@ -10,7 +10,7 @@ $shadingLessLikely: #57899E;
 $medianLine: #FDFEFF;
 
 body {
-  background: mix(#003C57, #004C6D, 50%);
+  background: $chartBgLight;
 
 
    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -111,5 +111,6 @@ body {
 
 img.key {
   display: block;
-  margin-left:444px;
+  margin-left:413px;
+  margin-top:-15px;
 }

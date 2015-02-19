@@ -28,6 +28,7 @@ module.exports = function routes(app) {
     if (development) {
         app.use(express.static(__dirname + '/../client-side/bower_components'));
         app.use(express.static(__dirname + '/../client-side/js'));
+        app.use(express.static(__dirname + '/../client-side/img'));
     }
 
     app.engine('handlebars', consolidate.handlebars);

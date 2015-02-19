@@ -2,52 +2,52 @@
   "goals": [
     {
       "id": 1,
-      "probability": 1.0,
+      "probability": 0.95,
       "date": "2017-04"
     },
     {
       "id": 2,
-      "probability": 1.0,
+      "probability": 0.95,
       "date": "2019-04"
     },
     {
       "id": 3,
-      "probability": 1.0,
+      "probability": 0.95,
       "date": "2021-04"
     },
     {
       "id": 4,
-      "probability": 1.0,
+      "probability": 0.95,
       "date": "2023-04"
     },
     {
       "id": 5,
-      "probability": 1.0,
+      "probability": 0.95,
       "date": "2025-04"
     },
     {
       "id": 5,
-      "probability": 1.0,
+      "probability": 0.95,
       "date": "2026-04"
     },
     {
       "id": 5,
-      "probability": 1.0,
+      "probability": 0.95,
       "date": "2027-04"
     },
     {
       "id": 5,
-      "probability": 1.0,
+      "probability": 0.95,
       "date": "2028-04"
     },
     {
       "id": 5,
-      "probability": 1.0,
+      "probability": 0.95,
       "date": "2029-04"
     },
     {
       "id": 5,
-      "probability": 1.0,
+      "probability": 0.95,
       "date": "2030-04"
     }
   ],

@@ -1,6 +1,8 @@
 $chartBgDark: #003C57;
 $chartBgLight: #004C6D;
 
+$goodProbability: #65B74D;
+
 $chartMajorLine: rgba(255, 255, 255, 0.6);
 $chartMinorLine: rgba(255, 255, 255, 0.3);
 
@@ -78,6 +80,21 @@ body {
     }
   }
 
+  .goal {
+    circle {
+      fill: #1A93C2;
+      stroke: #063D56;
+      stroke-width: 1.5;
+    }
+    rect {
+      fill: $goodProbability;
+      stoke: rgba(black, 0.5);
+    }
+    text {
+      fill: white;
+    }
+  }
+
   .startLine {
     line {
       stroke: white;
@@ -103,7 +120,7 @@ body {
   }
 
   .label rect {
-    fill: $chartBgDark;
+    fill: rgba($chartBgDark, 0.8);
     stroke: $chartMinorLine;
     stroke-width: 1.5px;
   }

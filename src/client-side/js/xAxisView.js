@@ -45,10 +45,8 @@ function xAxisView(element, visWin) {
         var newMajorTicks = initTickGroups(majorTicks);
         var newMinorTicks = initTickGroups(minorTicks);
 
-        minorTicks
-            .attr('transform', tickTranslate);
-        majorTicks
-            .attr('transform', tickTranslate);
+        minorTicks.attr('transform', tickTranslate);
+        majorTicks.attr('transform', tickTranslate);
 
         newMajorTicks
             .append('svg:line')

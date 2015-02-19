@@ -31,6 +31,8 @@ function visibleWindow(dimensions, MARGIN, series) {
 
     return {
         x: createXScale(),
-        y: createYScale()
+        y: createYScale(),
+        height: dimensions.height - MARGIN.top - MARGIN.bottom,
+        width: dimensions.width - MARGIN.left - MARGIN.right
     };
 }

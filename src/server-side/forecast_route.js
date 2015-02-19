@@ -6,7 +6,7 @@ module.exports = function(app) {
 
     var responseJson = {
         series:[],
-        goals:{}
+        goalGroups:[]
     };
 
     var percentiles = [10,30,50,70,90];
@@ -14,10 +14,12 @@ module.exports = function(app) {
     oboe(fs.createReadStream(__dirname + '/json/response_body.json'))
         .node({
             'goals.*.id': function(id){
-                responseJson.goals[id] = responseJson.goals[id] || [];
+                var groupIndex = id - 1;
+                responseJson.goalGroups[groupIndex] = responseJson.goalGroups[groupIndex] || [];
             },
             'goals.*': function(goal){
-                responseJson.goals[goal.id].push(goal);
+                var groupIndex = goal.id - 1;
+                responseJson.goalGroups[groupIndex].push(goal);
             },
             'dates.*': function(date) {
                 responseJson.series.push({

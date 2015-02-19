@@ -50,7 +50,6 @@ function chartView(chartElement, w, h, model) {
 
     panAndZoom(dChart, visWin, function() {
         render();
-        console.log('some zooming happened');
     });
 
     return {};

@@ -1,9 +1,11 @@
 function xAxisView(element, visWin) {
 
     var YEAR_ONLY_FORMAT = d3.time.format('%Y');
+    var MONTH_AND_YEAR_FORMAT = d3.time.format('%b %Y');
+    var YEAR = 1000 * 60 * 60 * 24 * 365;
     var width = pairExtent(visWin.x.range());
-    var numberMajorTicks = width / 100;
-    var numberMinorTicks = width / 20;
+    var numberMajorTicks = width / 150;
+    var numberMinorTicks = width / 30;
 
     console.log('drawing x scale', visWin.x, 'as an axis on', element);
 
@@ -16,6 +18,8 @@ function xAxisView(element, visWin) {
     }
 
     return function() {
+        var dateExtent = pairExtent(visWin.x.domain());
+
         var majorTickValues = visWin.x.ticks(numberMajorTicks);
         var majorTicks = element
                             .select('.major')
@@ -67,8 +71,10 @@ function xAxisView(element, visWin) {
             .attr('transform', translateXY(0, yMin))
             .attr('dy', 30);
 
-        majorTicks.selectAll('text')
-            .text(YEAR_ONLY_FORMAT);
+        var timeBetweenTicks = (majorTickValues[1] - majorTickValues[0]);
+        var dateFormatter = timeBetweenTicks < YEAR ? MONTH_AND_YEAR_FORMAT : YEAR_ONLY_FORMAT;
+
+        majorTicks.selectAll('text').text(dateFormatter);
 
         majorTicks.exit().remove();
         minorTicks.exit().remove();

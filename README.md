@@ -18,16 +18,19 @@ TODO
 ====
 
 * [x] load data in sensible format
-    * [ ] group goals by id on load
-* [ ] render axes
-    * [ ] years and minor ticks
-* [ ] render median
+* [x] render axes
+    * [x] years and minor ticks
+* [x] render median
 * [ ]   render median in model space
-* [ ] render other percentiles
+* [x] render other percentiles
+* [ ]   in model space
 * [ ] render goals
-* [ ]   two sizes depending on zoom
+    * [ ] group goals by id on load
+    * [ ]   two sizes depending on zoom
 * [ ] pseudo-clip rendering
-* [ ] panning
+* [ ] panning via drag
+    * [ ] initially show 10 years?
+    * [ ] and with arrows
 * [ ] zooming
 * [ ] draggable goals?
 

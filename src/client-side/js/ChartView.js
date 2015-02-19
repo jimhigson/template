@@ -36,7 +36,7 @@ function chartView(chartElement, w, h, model) {
             height: Math.abs(pairExtent(visWin.y.range()))
         });
 
-    startLine(dChart.select('.startLine'), visWin, model.series);
+    renderers.push( startLine(dChart.select('.startLine'), visWin, model.series) );
 
     renderers.push( dataRenderer.line(dChart.select('.data .median'), visWin, model.series, 50) );
     renderers.push( dataRenderer.area(dChart.select('.data .moreLikely'), visWin, model.series, 30, 70) );

@@ -42,7 +42,7 @@ function chartView(chartElement, w, h, model) {
         dataRenderer.area(dChart.select('.data .lessLikely'), visWin, model.series, 10, 90)
     ];
 
-    goalView(  );
+    goalView( dChart.select('.goals'), visWin, model.goals );
 
     function render() {
         renderers.forEach(function(r){r()});

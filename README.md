@@ -25,7 +25,7 @@ TODO
 * [x] render other percentiles
 * [ ]   in model space
 * [ ] render goals
-    * [ ] group goals by id on load
+    * [x] group goals by id on load
     * [ ]   two sizes depending on zoom
 * [ ] ---pseudo-clip rendering---
 * [x] panning via drag

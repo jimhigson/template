@@ -5,15 +5,19 @@ var oboe = require('oboe'),
 module.exports = function(app) {
 
     var responseJson = {
-        series:[]
+        series:[],
+        goals:{}
     };
 
     var percentiles = [10,30,50,70,90];
 
     oboe(fs.createReadStream(__dirname + '/json/response_body.json'))
         .node({
-            'goals': function(goals){
-                responseJson.goals = goals;
+            'goals.*.id': function(id){
+                responseJson.goals[id] = responseJson.goals[id] || [];
+            },
+            'goals.*': function(goal){
+                responseJson.goals[goal.id].push(goal);
             },
             'dates.*': function(date) {
                 responseJson.series.push({

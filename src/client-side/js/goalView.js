@@ -1,3 +1,3 @@
-function goalView() {
+function goalView(element, visWin, goals) {
 
 }

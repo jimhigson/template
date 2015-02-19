@@ -24,10 +24,11 @@ function goalView(sel, visWin, goalGroups) {
     dGoalGroups
         .append('svg:rect')
         .attr({
-            r: 2,
-            x: 6,
+            rx: 3,
+            ry: 3,
+            x: 4,
             y: -25,
-            width: 20,
+            width: 22,
             height: 20
         });
 

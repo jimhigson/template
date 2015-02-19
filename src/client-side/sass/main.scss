@@ -88,7 +88,8 @@ body {
     }
     rect {
       fill: $goodProbability;
-      stoke: rgba(black, 0.5);
+      stroke: rgba(black, 0.2);
+      stroke-width: 1;
     }
     text {
       fill: white;

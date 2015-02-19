@@ -15,7 +15,7 @@ var dataRenderer = (function() {
             .x(xComponent(visWin.x))
             .y(yComponent(visWin.y, percentile));
 
-        element.append('svg:path')
+        element
             .data(series)
             .attr("d", line(series) );
     }
@@ -26,7 +26,7 @@ var dataRenderer = (function() {
             .y0(yComponent(visWin.y, lowerPercentile))
             .y1(yComponent(visWin.y, upperPercentile));
 
-        element.append('svg:path')
+        element
             .data(series)
             .attr("d", area(series) );
     }

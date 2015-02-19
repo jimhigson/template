@@ -15,9 +15,11 @@ var dataRenderer = (function() {
             .x(xComponent(visWin.x))
             .y(yComponent(visWin.y, percentile));
 
-        element
-            .data(series)
-            .attr("d", line(series) );
+        return function() {
+            element
+                .datum(series)
+                .attr("d", line );
+        }
     }
 
     function areaRenderer(element, visWin, series, lowerPercentile, upperPercentile) {
@@ -26,9 +28,11 @@ var dataRenderer = (function() {
             .y0(yComponent(visWin.y, lowerPercentile))
             .y1(yComponent(visWin.y, upperPercentile));
 
-        element
-            .data(series)
-            .attr("d", area(series) );
+        return function() {
+            element
+                .datum(series)
+                .attr("d", area );
+        }
     }
 
     return {

@@ -18,12 +18,14 @@ function chartView(chartElement, w, h, model) {
 
     console.log('chartView: creating chart at element', chartElement, 'for data', model);
 
-    var dChart = d3.select(chartElement);
-//                    .data(model);
+    var dChart = d3.select(chartElement)
+                        .data(model.series);
 
     setDimensions(dChart, dimensions);
 
-    xAxisView(d3.select('.axes .x'), visWin);
+    var renderers = [];
+
+    renderers.push( xAxisView(d3.select('.axes .x'), visWin) );
     yAxisView(d3.select('.axes .y'), visWin);
 
     dChart.select('.chartArea')
@@ -36,11 +38,18 @@ function chartView(chartElement, w, h, model) {
 
     startLine(dChart.select('.startLine'), visWin, model.series);
 
-    dataRenderer.line(dChart.select('.data .median'), visWin, model.series, 50);
-    dataRenderer.area(dChart.select('.data .moreLikely'), visWin, model.series, 30, 70);
-    dataRenderer.area(dChart.select('.data .lessLikely'), visWin, model.series, 10, 90);
+    renderers.push( dataRenderer.line(dChart.select('.data .median'), visWin, model.series, 50) );
+    renderers.push( dataRenderer.area(dChart.select('.data .moreLikely'), visWin, model.series, 30, 70) );
+    renderers.push( dataRenderer.area(dChart.select('.data .lessLikely'), visWin, model.series, 10, 90) );
+
+    function render() {
+        renderers.forEach(function(r){r()});
+    }
+
+    render();
 
     panAndZoom(dChart, visWin, function() {
+        render();
         console.log('some zooming happened');
     });
 

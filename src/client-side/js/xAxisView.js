@@ -11,18 +11,22 @@ function xAxisView(element, visWin) {
     var yMin = yRange[0];
     var yMax = yRange[1];
 
+    function keyDatesByTimestamp(d){
+        return +d;
+    }
+
     return function() {
         var majorTickValues = visWin.x.ticks(numberMajorTicks);
         var majorTicks = element
                             .select('.major')
                             .selectAll('.tick')
-                            .data(majorTickValues);
+                            .data(majorTickValues, keyDatesByTimestamp);
 
         var minorTickValues = visWin.x.ticks(numberMinorTicks);
         var minorTicks = element
                             .select('.minor')
                             .selectAll('.tick')
-                            .data(minorTickValues);
+                            .data(minorTickValues, keyDatesByTimestamp);
 
         function tickTranslate(date) {
             return translateX(Math.round(visWin.x(date)));

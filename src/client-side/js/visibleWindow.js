@@ -31,11 +31,20 @@ function visibleWindow(dimensions, MARGIN, series) {
             .domain(expandedMoneyDomain);
     }
 
+    var MINUTE = 60 * 1000;
+    var HOUR = 60 * MINUTE;
+    var DAY = 24 * HOUR;
+    var YEAR = DAY * 365.24;
+    var AVERAGE_MONTH = YEAR/12;
+
+    /*  returns the density in terms of the width in px of one average-length month
+        on the chart */
     function timeDensity() {
         var rangePx = pairExtent( x.range() );
         var domainMs = pairExtent( x.domain() );
+        var domainMonths = domainMs/AVERAGE_MONTH;
 
-        return rangePx / domainMs;
+        return rangePx / domainMonths;
     }
 
     return {

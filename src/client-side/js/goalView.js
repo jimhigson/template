@@ -6,8 +6,7 @@ function goalView(container, visWin, goalGroups) {
     var yOffset = visWin.height - RADIUS_LARGE;
     container.attr('transform', translateXY(0, yOffset));
 
-    // for production code we need some nicer units
-    var densityBoundary = 2.5E-9;
+    var densityBoundary = 9;
     var isBig = false;
 
     var dGoalGroups = container
@@ -29,7 +28,7 @@ function goalView(container, visWin, goalGroups) {
         .append('svg:circle')
         .attr('r', radius());
 
-    var rects = dGoalGroups
+    dGoalGroups
         .append('svg:rect')
         .attr({
             rx: 3,
@@ -64,8 +63,6 @@ function goalView(container, visWin, goalGroups) {
 
     return function() {
         var bigNow = (visWin.timeDensity() > densityBoundary);
-
-        console.log(visWin.timeDensity());
 
         if( isBig != bigNow ) {
             isBig = bigNow;

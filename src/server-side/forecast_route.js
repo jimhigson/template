@@ -36,6 +36,7 @@ module.exports = function(app) {
             }
         })
         .done(function(){
+            responseJson.series.length = 300;
             console.log('created nicely formatted json');
         });
 

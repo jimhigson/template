@@ -49,6 +49,16 @@
       "id": 5,
       "probability": 0.95,
       "date": "2030-04"
+    },
+    {
+      "id": 6,
+      "probability": 0.81,
+      "date": "2030-05"
+    },
+    {
+      "id": 7,
+      "probability": 0.61,
+      "date": "2030-06"
     }
   ],
   "dates": [

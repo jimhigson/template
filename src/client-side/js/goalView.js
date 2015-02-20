@@ -1,8 +1,16 @@
-function goalView(sel, visWin, goalGroups) {
+function goalView(container, visWin, goalGroups) {
 
-    var RADIUS = 19;
+    var RADIUS_LARGE = 19;
+    var RADIUS_SMALL = 10;
 
-    var dGoalGroups = sel
+    var yOffset = visWin.height - RADIUS_LARGE;
+    container.attr('transform', translateXY(0, yOffset));
+
+    // for production code we need some nicer units
+    var densityBoundary = 2.5E-9;
+    var isBig = false;
+
+    var dGoalGroups = container
         .selectAll('.goalGroup')
         .data(goalGroups)
         .enter()
@@ -17,11 +25,11 @@ function goalView(sel, visWin, goalGroups) {
                         .append('svg:g')
                             .attr('class', 'goal');
 
-    dGoalGroups
+    var circles = dGoalGroups
         .append('svg:circle')
-        .attr('r', RADIUS);
+        .attr('r', radius());
 
-    dGoalGroups
+    var rects = dGoalGroups
         .append('svg:rect')
         .attr({
             rx: 3,
@@ -42,15 +50,30 @@ function goalView(sel, visWin, goalGroups) {
             return Math.round(d.probability * 100);
         });
 
-    var goals = sel.selectAll('.goal');
+    var goals = container.selectAll('.goal');
+
+    function radius() {
+        return isBig? RADIUS_LARGE : RADIUS_SMALL;
+    }
 
     function goalTranslate(goal) {
         var x = Math.round(visWin.x(goal.date));
-        var y = visWin.height - RADIUS;
-        return translateXY(x, y);
+
+        return translateX(x);
     }
 
     return function() {
+        var bigNow = (visWin.timeDensity() > densityBoundary);
+
+        console.log(visWin.timeDensity());
+
+        if( isBig != bigNow ) {
+            isBig = bigNow;
+
+            circles.transition().attr('r', radius());
+            container.classed('isBig', isBig);
+        }
+
         goals.attr('transform', goalTranslate);
     };
 }

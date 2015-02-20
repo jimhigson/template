@@ -80,19 +80,25 @@ body {
     }
   }
 
-  .goal {
-    circle {
-      fill: #1A93C2;
-      stroke: #063D56;
-      stroke-width: 1.5;
+  .goals {
+    .goal {
+      circle {
+        fill: #1A93C2;
+        stroke: #063D56;
+        stroke-width: 1.5;
+      }
+      rect {
+        fill: $goodProbability;
+        stroke: rgba(black, 0.2);
+        stroke-width: 1;
+      }
+      text {
+        fill: white;
+      }
     }
-    rect {
-      fill: $goodProbability;
-      stroke: rgba(black, 0.2);
-      stroke-width: 1;
-    }
-    text {
-      fill: white;
+    &:not(.isBig) text,
+    &:not(.isBig) rect {
+      display:none;
     }
   }
 

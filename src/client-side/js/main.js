@@ -8,7 +8,8 @@ $(function() {
             return new Date(parts[0], parts[1]);
         })
         .done(function(json){
-            chartView(document.getElementById('mainChart'), 900, 400, json);
+            var windowWidth = $(window).width();
+            chartView(document.getElementById('mainChart'), windowWidth, 400, json);
         }).fail(function(e){
             console.log(e);
         });

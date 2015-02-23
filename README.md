@@ -34,7 +34,7 @@ TODO
     * [ ] and with arrows
 * [x] zooming
 * [ ] draggable goals?
-* [ ] put mouse near line to see number in a tool thing
-* [ ] adjust to window size
+* [x] put mouse near line to see number in a tool thing
+* [x] adjust to window size
 
 * [ ] Split into SVG and 'the drawer'

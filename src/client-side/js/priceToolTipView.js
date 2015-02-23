@@ -7,10 +7,23 @@ function priceToolTipRenderer(hoverElement, renderElement, visWin, series) {
         var xTime = visWin.x.invert(mousePosX);
         var dataPoint = dataPointClosestTo(xTime)
 
-        var xPix = visWin.x(dataPoint.date);
-        var yPix = visWin.y(dataPoint.percentiles[50]);
 
-        renderElement.attr('transform', translateXY(Math.round(xPix), Math.round(yPix)));
+
+        renderElement.datum(dataPoint);
+        renderElement.attr('transform', positionAtDataPoint);
+        renderElement.select('.number').text(formattedPrice);
+    }
+
+    function formattedPrice(d) {
+        var median = d.percentiles[50];
+        return (Math.round(median/100) /10) + 'k';
+    }
+
+    function positionAtDataPoint(d) {
+        var xPix = visWin.x(d.date);
+        var yPix = visWin.y(d.percentiles[50]);
+
+        return translateXY(Math.round(xPix), Math.round(yPix));
     }
 
     // This is extremely sub-optimal! Should be replaced with a log(n) time operation.

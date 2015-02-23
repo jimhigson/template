@@ -133,11 +133,16 @@ body {
     fill: url('#backgroundGradient');
   }
 
-  .label rect,
-  .label path {
-    fill: rgba($chartBgDark, 0.8);
-    stroke: $chartMinorLine;
-    stroke-width: 1.5px;
+  .label {
+    rect, path {
+      fill: rgba($chartBgDark, 0.8);
+      stroke: $chartMinorLine;
+      stroke-width: 1.5px;
+    }
+
+    text {
+      fill:white; stroke: none;
+    }
   }
 
 

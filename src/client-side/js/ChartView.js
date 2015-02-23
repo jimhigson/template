@@ -38,9 +38,16 @@ function chartView(chartElement, w, h, model) {
         xAxisView(d3.select('.axes .x'), visWin),
         startLine(dChart.select('.startLine'), visWin, model.series),
 
-        dataRenderer.line(dChart.select('.data .median'), visWin, model.series, 50),
-        dataRenderer.area(dChart.select('.data .moreLikely'), visWin, model.series, 30, 70),
-        dataRenderer.area(dChart.select('.data .lessLikely'), visWin, model.series, 10, 90)
+        dataRenderer.line(dChart.selectAll('path.median'), visWin, model.series, 50),
+        dataRenderer.area(dChart.select('path.moreLikely'), visWin, model.series, 30, 70),
+        dataRenderer.area(dChart.select('path.lessLikely'), visWin, model.series, 10, 90),
+
+        priceToolTipRenderer(
+            dChart.selectAll('path.median.hoverSpace'),
+            dChart.selectAll('.priceTooltip'),
+            visWin,
+            model.series
+        )
     ];
 
     function render() {

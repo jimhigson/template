@@ -28,12 +28,13 @@ TODO
     * [x] group goals by id on load
     * [ ] two sizes depending on zoom
     * [ ] smaller 'balls' when zoom past a certain level
-* [ ] -- pseudo-clip rendering --
+* [-] -- pseudo-clip rendering --
 * [x] panning via drag
     * [x] initially show 10 years?
     * [ ] and with arrows
 * [x] zooming
 * [ ] draggable goals?
 * [ ] put mouse near line to see number in a tool thing
+* [ ] adjust to window size
 
 * [ ] Split into SVG and 'the drawer'

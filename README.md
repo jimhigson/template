@@ -38,3 +38,4 @@ TODO
 * [x] adjust to window size
 
 * [ ] Split into SVG and 'the drawer'
+* [ ] Connect to real data service

@@ -26,8 +26,7 @@ TODO
 * [ ]   in model space
 * [ ] render goals
     * [x] group goals by id on load
-    * [ ] two sizes depending on zoom
-    * [ ] smaller 'balls' when zoom past a certain level
+    * [x] smaller 'balls' when zoom past a certain level
 * [-] -- pseudo-clip rendering --
 * [x] panning via drag
     * [x] initially show 10 years?

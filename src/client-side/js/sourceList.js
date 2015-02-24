@@ -14,5 +14,6 @@ module.exports = [
    'src/client-side/js/startLine.js',
    'src/client-side/js/panAndZoom.js',
    'src/client-side/js/goalView.js',
-   'src/client-side/js/priceToolTipView.js'
+   'src/client-side/js/priceToolTipView.js',
+   'src/client-side/js/arrowsView.js'
 ];

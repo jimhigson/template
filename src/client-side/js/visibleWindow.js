@@ -1,5 +1,7 @@
 function visibleWindow(dimensions, MARGIN, series) {
 
+    var timeLeftExpandProportion = 0.25;
+
     var x = createXScale();
     var y = createYScale();
 
@@ -11,10 +13,12 @@ function visibleWindow(dimensions, MARGIN, series) {
 
         var extentMs = pairExtent(timeDomain);
 
-        var expandedDomain = [new Date(timeDomain[0] - extentMs * 0.2), timeDomain[1]];
+        var expandedTimeDomain = [  new Date(timeDomain[0] - extentMs * timeLeftExpandProportion),
+                                    timeDomain[1]
+                                 ];
         return d3.time.scale()
             .range([MARGIN.left, dimensions.width - MARGIN.right])
-            .domain(expandedDomain);
+            .domain(expandedTimeDomain);
     }
 
     function createYScale() {

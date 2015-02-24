@@ -47,7 +47,9 @@ function chartView(chartElement, w, h, model) {
             dChart.selectAll('.priceTooltip'),
             visWin,
             model.series
-        )
+        ),
+
+        arrowsView(dChart.select('.arrows'), visWin)
     ];
 
     function render() {
@@ -56,9 +58,10 @@ function chartView(chartElement, w, h, model) {
 
     render();
 
-    panAndZoom(dChart, visWin, function() {
-        render();
-    });
+    // TODO: visWin should fire an event which is picked up by renderers
+    // which care about zooming. This would allow different kinds of
+    // re-rendering (resize window, data change, pan, zoom...)
+    panAndZoom(dChart, visWin, render);
 
     return {};
 }

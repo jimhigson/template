@@ -53,15 +53,17 @@ function yAxisView(element, visWin) {
             .attr('x1', xMinPx)
             .attr('x2', xMaxPx);
 
-    newMajorTicks
-        .append('svg:g')
-        .attr('class', 'label')
-        .attr('transform', translateX(Math.round(interpolateBetweenPair(xRange, 0.1))));
+    var labelProportionalDistance = 0.125;
 
     newMajorTicks
         .append('svg:g')
         .attr('class', 'label')
-        .attr('transform', translateX(Math.round(interpolateBetweenPair(xRange, 0.9))));
+        .attr('transform', translateX(Math.round(interpolateBetweenPair(xRange, labelProportionalDistance))));
+
+    newMajorTicks
+        .append('svg:g')
+        .attr('class', 'label')
+        .attr('transform', translateX(Math.round(interpolateBetweenPair(xRange, 1-labelProportionalDistance))));
 
     var newLabels = newMajorTicks.selectAll('g.label');
 

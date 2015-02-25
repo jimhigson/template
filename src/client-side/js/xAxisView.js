@@ -17,16 +17,33 @@ function xAxisView(element, visWin) {
         return +d;
     }
 
-    return function() {
-        var dateExtent = pairExtent(visWin.x.domain());
+    function getMajorTickValues() {
+        return visWin.x.ticks(numberMajorTicks);
+    }
 
-        var majorTickValues = visWin.x.ticks(numberMajorTicks);
+    function getMinorTickValues() {
+
+        var ticks = visWin.x.ticks(numberMinorTicks);
+
+        var averageTick = (_.last(ticks).getTime() - _.first(ticks).getTime()) / ticks.length;
+
+        if( averageTick <  (TIME_CONSTANTS.AVERAGE_MONTH/2)) {
+            // don't want week ticks
+            return [];
+        } else {
+            return ticks;
+        }
+    }
+
+    return function() {
+
+        var majorTickValues = getMajorTickValues();
         var majorTicks = element
                             .select('.major')
                             .selectAll('.tick')
                             .data(majorTickValues, keyDatesByTimestamp);
 
-        var minorTickValues = visWin.x.ticks(numberMinorTicks);
+        var minorTickValues = getMinorTickValues();
         var minorTicks = element
                             .select('.minor')
                             .selectAll('.tick')

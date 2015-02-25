@@ -60,14 +60,15 @@ function visibleWindow(dimensions, MARGIN, series) {
         timeExtent: function(){
             return pairExtent(x.domain());
         },
+        timeCentre: function() {
+            var xRange = x.range();
+            var pixCentre = xRange[0] + pairExtent(xRange)/2;
+            return x.invert(pixCentre);
+        },
         centreOnTime: function(time) {
             var timeMs = time.getTime();
             var halfDomainExtent = this.timeExtent()/2;
-
-            console.log('centering on', timeMs, 'with an extent of', this.timeExtent());
             var newDomain = [new Date(timeMs - halfDomainExtent), new Date(timeMs + halfDomainExtent)];
-            console.log('domain was', x.domain());
-            console.log('by centering going to', newDomain, 'which has extent of', pairExtent(newDomain));
 
             x.domain(newDomain);
         }

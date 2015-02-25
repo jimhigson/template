@@ -17,17 +17,14 @@ function panAndZoom(element, sliderElement, visWin, zoomCallback) {
         });
 
     sliderElement.change(function(){
-        var timeCentre = visWin.x.invert(visWin.width/2);
 
-        console.log('before zoom centred on timeCentre', visWin.x.invert(visWin.width/2));
+        var timeCentre = visWin.timeCentre();
 
         zoom.scale(sliderElement.val());
 
         visWin.centreOnTime(timeCentre);
 
         actionZoom();
-
-        console.log('after zoom centred on timeCentre', visWin.x.invert(visWin.width/2));
     });
 
     zoom.x(visWin.x);

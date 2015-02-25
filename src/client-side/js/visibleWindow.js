@@ -56,6 +56,20 @@ function visibleWindow(dimensions, MARGIN, series) {
         y: y,
         height: dimensions.height - MARGIN.top - MARGIN.bottom,
         width: dimensions.width - MARGIN.left - MARGIN.right,
-        timeDensity: timeDensity
+        timeDensity: timeDensity,
+        timeExtent: function(){
+            return pairExtent(x.domain());
+        },
+        centreOnTime: function(time) {
+            var timeMs = time.getTime();
+            var halfDomainExtent = this.timeExtent()/2;
+
+            console.log('centering on', timeMs, 'with an extent of', this.timeExtent());
+            var newDomain = [new Date(timeMs - halfDomainExtent), new Date(timeMs + halfDomainExtent)];
+            console.log('domain was', x.domain());
+            console.log('by centering going to', newDomain, 'which has extent of', pairExtent(newDomain));
+
+            x.domain(newDomain);
+        }
     };
 }

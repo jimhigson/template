@@ -61,7 +61,7 @@ function chartView(chartElement, w, h, model) {
     // TODO: visWin should fire an event which is picked up by renderers
     // which care about zooming. This would allow different kinds of
     // re-rendering (resize window, data change, pan, zoom...)
-    panAndZoom(dChart, visWin, render);
+    panAndZoom(dChart, $('#zoomer'), visWin, render);
 
     return {};
 }

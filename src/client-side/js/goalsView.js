@@ -44,7 +44,8 @@ function goalsView(container, visWin, goalsByDate) {
 
         var angle = i * (Math.PI * 2)/numberOfGoals + Math.PI;
 
-        var offsetFromCentre = RADIUS * (compact? 0.8 : Math.pow(1.2, numberOfGoals -1));
+        var proportinoalDistanceFromCentre = Math.pow(1.2, numberOfGoals -1);
+        var offsetFromCentre = RADIUS * (compact ? 0.5 : 1) * proportinoalDistanceFromCentre;
         var x = offsetFromCentre * Math.sin(angle);
         var y = offsetFromCentre * Math.cos(angle);
 

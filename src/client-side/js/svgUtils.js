@@ -5,3 +5,7 @@ function translateXY(x,y) {
 function translateX(x) {
     return 'translate(' + x + ')';
 }
+
+function scale(s){
+    return 'scale(' + s + ')';
+}

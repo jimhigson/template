@@ -89,10 +89,14 @@ body {
   }
 
   .goals {
+    circle {
+      vector-effect:non-scaling-stroke;
+    }
+
     .goal {
       circle {
         fill: #1A93C2;
-        stroke: #063D56;
+        stroke: white;
         stroke-width: 1.5;
       }
       rect {
@@ -104,9 +108,13 @@ body {
         fill: white;
       }
     }
-    &:not(.isBig) text,
-    &:not(.isBig) rect {
-      display:none;
+
+    .multiple-goals,
+    &:not(.isBig) {
+
+      .probability {
+        display:none;
+      }
     }
   }
 

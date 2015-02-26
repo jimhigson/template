@@ -16,25 +16,48 @@ function goalsView(container, visWin, goalsByDate) {
                 .attr('data-goal-group', function(d, i){
                     return i;
                 })
-                .attr('goal-number', function(d, i){
+                .attr('goal-quantity', function(d){
                     return d.length;
                 })
+                .classed('multiple-goals', function(d){
+                    return d.length > 1;
+                });
 
     var dNewGoals = dGoalGroups
         .append('svg:g')
             .attr('class', 'scaler')
                 .selectAll('.goal')
                 .data(function(goalArrayForDate){return goalArrayForDate})
-                .enter()
-                    .append('svg:g')
-                        .attr('class', 'goal');
+                    .enter()
+                        .append('svg:g')
+                            .attr('class', 'goal');
+
+    dNewGoals
+        .filter(function(d) {
+            return d.dateGroup.length > 1;
+        })
+        .attr('transform', function(d, i){
+            var numberOfGoals = d.dateGroup.length;
+
+            var scaleFactor = Math.pow(0.85, numberOfGoals -1);
+
+            var angle = i * (Math.PI * 2)/numberOfGoals + Math.PI;
+
+            var offsetFromCentre = RADIUS * 0.8;
+            var x = offsetFromCentre * Math.sin(angle);
+            var y = offsetFromCentre * Math.cos(angle);
+
+            return scale(scaleFactor) + translateXY(x,y);
+        });
 
     dNewGoals
         .append('svg:circle')
         .attr('r', RADIUS);
 
     function addProbabilityLabel(dGoals) {
-        dGoals
+        var labels = dGoals.append('svg:g').attr('class', 'probability');
+
+        labels
             .append('svg:rect')
             .attr({
                 rx: 3,
@@ -45,7 +68,7 @@ function goalsView(container, visWin, goalsByDate) {
                 height: 20
             });
 
-        dGoals
+        labels
             .append('svg:text')
             .attr({
                 x: 8,
@@ -67,8 +90,7 @@ function goalsView(container, visWin, goalsByDate) {
     }
 
     function scaleTransform(isBig) {
-        var scale = isBig? 1: 0.5;
-        return 'scale(' + scale + ')';
+        return scale(isBig? 1: 0.5);
     }
 
     var scalers = dGoalGroups.selectAll('.scaler');

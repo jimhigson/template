@@ -7,9 +7,8 @@ function visibleWindow(dimensions, MARGIN, series) {
 
     function createXScale() {
 
-        var timeDomain = d3.extent(series, function (d) {
-            return d.date;
-        });
+        var firstDate = series[0].date;
+        var timeDomain = [firstDate, new Date(firstDate.getTime() + TIME_CONSTANTS.YEAR * 10)];
 
         var extentMs = pairExtent(timeDomain);
 
@@ -65,6 +64,9 @@ function visibleWindow(dimensions, MARGIN, series) {
             var newDomain = [new Date(timeMs - halfDomainExtent), new Date(timeMs + halfDomainExtent)];
 
             x.domain(newDomain);
-        }
+        },
+        fullDateRange: d3.extent(series, function (d) {
+            return d.date;
+        })
     };
 }

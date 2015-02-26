@@ -4,19 +4,30 @@ function panAndZoom(element, sliderElement, visWin, zoomCallback) {
         zoomCallback();
     }
 
+    var fullTimeExtend = pairExtent(visWin.fullDateRange);
     var originalTimeExtent = visWin.timeExtent();
 
-    var zoom = d3.behavior.zoom()
-        .scaleExtent([1, 18])
-        .on('zoom', function() {
-            var newZoomScale = originalTimeExtent/ visWin.timeExtent();
+    var minScale = originalTimeExtent / fullTimeExtend * 0.8;
+    var maxScale = minScale * 18 / 0.8;
 
-            sliderElement.val(newZoomScale);
+    sliderElement.attr('min', minScale);
+    sliderElement.attr('max', maxScale);
+
+    var zoom = d3.behavior.zoom()
+        .scaleExtent([minScale, maxScale])
+        .on('zoom', function() {
+            updateSlider();
 
             actionZoom();
         });
 
-    sliderElement.change(function(){
+    function updateSlider() {
+        var newZoomScale = originalTimeExtent/ visWin.timeExtent();
+
+        sliderElement.val(newZoomScale);
+    }
+
+    sliderElement.on('input', function(){
 
         var timeCentre = visWin.timeCentre();
 

@@ -116,7 +116,7 @@ function goalsView(container, visWin, goalsByDate) {
     }
 
     function scaleTransform(isBig) {
-        return scale(isBig? 1: 0.5);
+        return translateXY(0, isBig? 0: RADIUS/2) + scale(isBig? 1: 0.5);
     }
 
     var scalers = dGoalGroups.selectAll('.scaler');

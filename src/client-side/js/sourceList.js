@@ -14,7 +14,8 @@ module.exports = [
    'src/client-side/js/dataRenderer.js',
    'src/client-side/js/startLine.js',
    'src/client-side/js/panAndZoom.js',
-   'src/client-side/js/goalView.js',
+   'src/client-side/js/goalsView.js',
    'src/client-side/js/priceToolTipView.js',
-   'src/client-side/js/arrowsView.js'
+   'src/client-side/js/arrowsView.js',
+   'src/client-side/js/data/requestSimulationData.js'
 ];

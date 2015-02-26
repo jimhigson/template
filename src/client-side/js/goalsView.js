@@ -1,4 +1,4 @@
-function goalView(container, visWin, goalGroups) {
+function goalsView(container, visWin, goalGroups) {
 
     var RADIUS_LARGE = 19;
     var RADIUS_SMALL = 10;
@@ -28,26 +28,30 @@ function goalView(container, visWin, goalGroups) {
         .append('svg:circle')
         .attr('r', radius());
 
-    dGoalGroups
-        .append('svg:rect')
-        .attr({
-            rx: 3,
-            ry: 3,
-            x: 4,
-            y: -25,
-            width: 22,
-            height: 20
-        });
+    function addProbabilityLabel(dGoalGroups) {
+        dGoalGroups
+            .append('svg:rect')
+            .attr({
+                rx: 3,
+                ry: 3,
+                x: 4,
+                y: -25,
+                width: 22,
+                height: 20
+            });
 
-    dGoalGroups
-        .append('svg:text')
-        .attr({
-            x: 8,
-            y: -10
-        })
-        .text(function(d){
-            return Math.round(d.probability * 100);
-        });
+        dGoalGroups
+            .append('svg:text')
+            .attr({
+                x: 8,
+                y: -10
+            })
+            .text(function(d){
+                return Math.round(d.probability * 100);
+            });
+    }
+
+    addProbabilityLabel(dGoalGroups);
 
     var goals = container.selectAll('.goal');
 

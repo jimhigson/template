@@ -109,7 +109,7 @@ body {
       }
     }
 
-    .multiple-goals,
+    .multiple-goals:not(:hover),
     &:not(.isBig) {
 
       .probability {

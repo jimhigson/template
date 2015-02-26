@@ -1,8 +1,11 @@
 
 var oboe = require('oboe'),
-    fs = require('fs');
+    fs = require('fs'),
+    _ = require('lodash');
 
 module.exports = function(app) {
+
+    var flatGoals = [];
 
     var responseJson = {
         series:[],
@@ -13,13 +16,8 @@ module.exports = function(app) {
 
     oboe(fs.createReadStream(__dirname + '/json/response_body.json'))
         .node({
-            'goals.*.id': function(id){
-                var groupIndex = id - 1;
-                responseJson.goalGroups[groupIndex] = responseJson.goalGroups[groupIndex] || [];
-            },
             'goals.*': function(goal){
-                var groupIndex = goal.id - 1;
-                responseJson.goalGroups[groupIndex].push(goal);
+                flatGoals.push(goal);
             },
             'dates.*': function(date) {
                 responseJson.series.push({
@@ -37,6 +35,7 @@ module.exports = function(app) {
         })
         .done(function(){
             responseJson.series.length = 300;
+            responseJson.goalsByDate = _.groupBy(flatGoals, 'date');
             console.log('created nicely formatted json');
         });
 

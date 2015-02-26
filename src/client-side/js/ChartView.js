@@ -34,7 +34,7 @@ function chartView(chartElement, w, h, model) {
 
 
     var renderers = [
-        goalsView( dChart.select('.goals'), visWin, model.goalGroups ),
+        goalsView( dChart.select('.goals'), visWin, _.map(model.goalsByDate) ),
         xAxisView(d3.select('.axes .x'), visWin),
         startLine(dChart.select('.startLine'), visWin, model.series),
 

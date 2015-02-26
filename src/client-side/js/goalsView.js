@@ -1,35 +1,40 @@
-function goalsView(container, visWin, goalGroups) {
+function goalsView(container, visWin, goalsByDate) {
 
-    var RADIUS_LARGE = 19;
-    var RADIUS_SMALL = 10;
+    var RADIUS = 19;
 
-    var yOffset = visWin.height - RADIUS_LARGE;
+    var yOffset = visWin.height - RADIUS;
     container.attr('transform', translateXY(0, yOffset));
 
     var densityBoundary = 9;
-    var isBig = false;
 
     var dGoalGroups = container
-        .selectAll('.goalGroup')
-        .data(goalGroups)
+        .selectAll('.goalsOnDate')
+        .data(goalsByDate)
         .enter()
             .append('svg:g')
-                .attr('class', 'goalGroup')
+                .attr('class', 'goalsOnDate')
                 .attr('data-goal-group', function(d, i){
                     return i;
                 })
-                    .selectAll('.goal')
-                    .data(function(d){console.log(d); return d;})
-                    .enter()
-                        .append('svg:g')
-                            .attr('class', 'goal');
+                .attr('goal-number', function(d, i){
+                    return d.length;
+                })
 
-    var circles = dGoalGroups
+    var dNewGoals = dGoalGroups
+        .append('svg:g')
+            .attr('class', 'scaler')
+                .selectAll('.goal')
+                .data(function(goalArrayForDate){return goalArrayForDate})
+                .enter()
+                    .append('svg:g')
+                        .attr('class', 'goal');
+
+    dNewGoals
         .append('svg:circle')
-        .attr('r', radius());
+        .attr('r', RADIUS);
 
-    function addProbabilityLabel(dGoalGroups) {
-        dGoalGroups
+    function addProbabilityLabel(dGoals) {
+        dGoals
             .append('svg:rect')
             .attr({
                 rx: 3,
@@ -40,7 +45,7 @@ function goalsView(container, visWin, goalGroups) {
                 height: 20
             });
 
-        dGoalGroups
+        dGoals
             .append('svg:text')
             .attr({
                 x: 8,
@@ -51,30 +56,43 @@ function goalsView(container, visWin, goalGroups) {
             });
     }
 
-    addProbabilityLabel(dGoalGroups);
+    addProbabilityLabel(dNewGoals);
 
-    var goals = container.selectAll('.goal');
 
-    function radius() {
-        return isBig? RADIUS_LARGE : RADIUS_SMALL;
-    }
+    function goalTranslate(goalGroups) {
 
-    function goalTranslate(goal) {
-        var x = Math.round(visWin.x(goal.date));
+        var x = Math.round(visWin.x(goalGroups[0].date));
 
         return translateX(x);
     }
 
-    return function() {
+    function scaleTransform(isBig) {
+        var scale = isBig? 1: 0.5;
+        return 'scale(' + scale + ')';
+    }
+
+    var scalers = dGoalGroups.selectAll('.scaler');
+
+    function rescale(transition) {
+        var target = transition? scalers.transition() : scalers;
+
+        target.attr('transform', scaleTransform(isBig));
+
+        container.classed('isBig', isBig);
+    }
+
+    function fixSizesAndTraslate() {
         var bigNow = (visWin.timeDensity() > densityBoundary);
 
         if( isBig != bigNow ) {
             isBig = bigNow;
-
-            circles.transition().attr('r', radius());
-            container.classed('isBig', isBig);
+            rescale(true);
         }
 
-        goals.attr('transform', goalTranslate);
-    };
+        dGoalGroups.attr('transform', goalTranslate);
+    }
+
+    var isBig = false;
+    rescale(false);
+    return fixSizesAndTraslate;
 }

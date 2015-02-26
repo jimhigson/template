@@ -23,6 +23,11 @@ function goalsView(container, visWin, goalsByDate) {
                     return d.length > 1;
                 });
 
+    dGoalGroups
+        .append('svg:circle')
+            .attr('class', 'hover-space')
+            .attr('r', 1.1 * RADIUS);
+
     var dNewGoals = dGoalGroups
         .append('svg:g')
             .attr('class', 'scaler')
@@ -32,23 +37,44 @@ function goalsView(container, visWin, goalsByDate) {
                         .append('svg:g')
                             .attr('class', 'goal');
 
-    dNewGoals
-        .filter(function(d) {
-            return d.dateGroup.length > 1;
+    function multipleGoalOffset(compact, d, i) {
+        var numberOfGoals = d.dateGroup.length;
+
+        var scaleFactor = compact? Math.pow(0.85, numberOfGoals -1) : 1;
+
+        var angle = i * (Math.PI * 2)/numberOfGoals + Math.PI;
+
+        var offsetFromCentre = RADIUS * (compact? 0.8 : Math.pow(1.2, numberOfGoals -1));
+        var x = offsetFromCentre * Math.sin(angle);
+        var y = offsetFromCentre * Math.cos(angle);
+
+        return scale(scaleFactor) + translateXY(x,y);
+    }
+
+    var compactGoalCluster = _.partial(multipleGoalOffset, true);
+    var expandedGoalCluster = _.partial(multipleGoalOffset, false);
+
+    dGoalGroups
+        .filter(function(d){
+            return d.length > 1;
         })
-        .attr('transform', function(d, i){
-            var numberOfGoals = d.dateGroup.length;
+        .each(function(d, i) {
+            var sel = d3.select(this);
 
-            var scaleFactor = Math.pow(0.85, numberOfGoals -1);
+            var goalsInGroup = sel.selectAll('.goal');
 
-            var angle = i * (Math.PI * 2)/numberOfGoals + Math.PI;
-
-            var offsetFromCentre = RADIUS * 0.8;
-            var x = offsetFromCentre * Math.sin(angle);
-            var y = offsetFromCentre * Math.cos(angle);
-
-            return scale(scaleFactor) + translateXY(x,y);
-        });
+            d3.select(this)
+                .on('mouseenter', function(){
+                    if( isBig ) {
+                        goalsInGroup.transition().attr('transform', expandedGoalCluster);
+                    }
+                })
+                .on('mouseleave', function(){
+                    goalsInGroup.transition().attr('transform', compactGoalCluster);
+                });
+        })
+        .selectAll('.goal')
+            .attr('transform', compactGoalCluster);
 
     dNewGoals
         .append('svg:circle')
@@ -103,8 +129,12 @@ function goalsView(container, visWin, goalsByDate) {
         container.classed('isBig', isBig);
     }
 
+    function zoomedIn() {
+        return (visWin.timeDensity() > densityBoundary);
+    }
+
     function fixSizesAndTraslate() {
-        var bigNow = (visWin.timeDensity() > densityBoundary);
+        var bigNow = zoomedIn();
 
         if( isBig != bigNow ) {
             isBig = bigNow;
@@ -114,7 +144,7 @@ function goalsView(container, visWin, goalsByDate) {
         dGoalGroups.attr('transform', goalTranslate);
     }
 
-    var isBig = false;
+    var isBig = zoomedIn();
     rescale(false);
     return fixSizesAndTraslate;
 }

@@ -2,22 +2,22 @@
   "goals": [
     {
       "id": 1,
-      "probability": 0.95,
+      "probability": 0.23,
       "date": "2017-04"
     },
     {
       "id": 1,
-      "probability": 0.95,
+      "probability": 0.91,
       "date": "2017-04"
     },
     {
       "id": 1,
-      "probability": 0.95,
+      "probability": 0.99,
       "date": "2017-04"
     },
     {
       "id": 1,
-      "probability": 0.95,
+      "probability": 0.54,
       "date": "2017-04"
     },
     {

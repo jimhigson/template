@@ -57,11 +57,12 @@ module.exports = function (grunt) {
                     }
                 },
                 src: './src/client-side/js/main.js',
-                dest: './build/client-side/js/all.js'
+                dest: './build/client-side/js/chart.js'
             }
         },
 
         uglify: {
+
         },
 
         cssmin: {

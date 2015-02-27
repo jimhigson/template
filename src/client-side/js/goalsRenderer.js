@@ -4,6 +4,8 @@ var translateX = require('./svgUtils.js').translateX;
 var translateXY = require('./svgUtils.js').translateXY;
 var scale = require('./svgUtils.js').scale;
 
+var π = Math.PI, τ = 2 * π;
+
 module.exports = function goalsView(container, visWin, goalsByDate) {
 
     var RADIUS = 24;
@@ -48,12 +50,12 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
 
         var scaleFactor = compact? Math.pow(0.85, numberOfGoals -1) : 1;
 
-        var angle = i * (Math.PI * 2)/numberOfGoals + Math.PI;
+        var φ = i * τ/numberOfGoals + π;
 
-        var proportinoalDistanceFromCentre = Math.pow(1.2, numberOfGoals -1);
-        var offsetFromCentre = RADIUS * (compact ? 0.5 : 1) * proportinoalDistanceFromCentre;
-        var x = offsetFromCentre * Math.sin(angle);
-        var y = offsetFromCentre * Math.cos(angle);
+        var proportionalDistanceFromCentre = Math.pow(1.2, numberOfGoals -1);
+        var offsetFromCentre = RADIUS * (compact ? 0.5 : 1) * proportionalDistanceFromCentre;
+        var x = offsetFromCentre * Math.sin(φ);
+        var y = offsetFromCentre * Math.cos(φ);
 
         return scale(scaleFactor) + translateXY(x,y);
     }
@@ -65,7 +67,7 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
         .filter(function(d){
             return d.length > 1;
         })
-        .each(function(d, i) {
+        .each(function() {
             var sel = d3.select(this);
 
             var goalsInGroup = sel.selectAll('.goal');
@@ -151,4 +153,4 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
     var isBig = zoomedIn();
     rescale(false);
     return fixSizesAndTraslate;
-}
+};

@@ -3,7 +3,7 @@ var express = require('express'),
     env = process.env.NODE_ENV,
     development = (env == 'development'),
 
-    SCRIPTS = ['js/all.js'],
+    SCRIPTS = ['js/chart.js'],
     STYLES = development ? ['css/main.css'] : ['css-min/all.css'];
 
 module.exports = function routes(app) {

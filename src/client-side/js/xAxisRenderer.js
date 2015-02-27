@@ -1,4 +1,10 @@
-function xAxisView(element, visWin) {
+var AVERAGE_MONTH = require('./timeConstants.js').AVERAGE_MONTH;
+var pairExtent = require('./pairs.js').pairExtent;
+var _ = require('lodash');
+var translateX = require('./svgUtils.js').translateX;
+var translateXY = require('./svgUtils.js').translateXY;
+
+module.exports = function xAxisView(element, visWin) {
 
     var YEAR_ONLY_FORMAT = d3.time.format('%Y');
     var MONTH_AND_YEAR_FORMAT = d3.time.format('%b %Y');
@@ -27,7 +33,7 @@ function xAxisView(element, visWin) {
 
         var averageTick = (_.last(ticks).getTime() - _.first(ticks).getTime()) / ticks.length;
 
-        if( averageTick <  (TIME_CONSTANTS.AVERAGE_MONTH/2)) {
+        if( averageTick <  AVERAGE_MONTH/2 ) {
             // don't want week ticks
             return [];
         } else {

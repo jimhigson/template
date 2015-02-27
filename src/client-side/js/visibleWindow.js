@@ -1,4 +1,10 @@
-function visibleWindow(dimensions, MARGIN, series) {
+var TIME_CONSTANTS = require('./timeConstants.js');
+var pairExtent = require('./pairs.js').pairExtent;
+var expandPair = require('./pairs.js').expandPair;
+var positiveOnly = require('./pairs.js').positiveOnly;
+var d3 = require('d3');
+
+module.exports = function visibleWindow(dimensions, MARGIN, series) {
 
     var timeLeftExpandProportion = 0.25;
 

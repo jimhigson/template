@@ -35,6 +35,7 @@ TODO
 * [ ] draggable goals?
 * [x] put mouse near line to see number in a tool thing
 * [x] adjust to window size
+* [ ] Browserify
 
 * [ ] Split into SVG and 'the drawer'
 * [ ] Connect to real data service

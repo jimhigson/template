@@ -1,13 +1,15 @@
-function priceToolTipRenderer(hoverElement, renderElement, visWin, series) {
+var d3 = require('d3');
+var _ = require('lodash');
+var translateXY = require('./svgUtils.js').translateXY;
+
+module.exports = function priceToolTipRenderer(hoverElement, renderElement, visWin, series) {
 
     function showTooltipNearMouse() {
         var mousePos = d3.mouse(hoverElement.node());
 
         var mousePosX = mousePos[0];
         var xTime = visWin.x.invert(mousePosX);
-        var dataPoint = dataPointClosestTo(xTime)
-
-
+        var dataPoint = dataPointClosestTo(xTime);
 
         renderElement.datum(dataPoint);
         renderElement.attr('transform', positionAtDataPoint);

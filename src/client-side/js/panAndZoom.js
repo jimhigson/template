@@ -1,4 +1,7 @@
-function panAndZoom(element, sliderElement, visWin, zoomCallback) {
+var d3 = require('d3');
+var pairExtent = require('./pairs.js').pairExtent;
+
+module.exports = function panAndZoom(element, sliderElement, visWin, zoomCallback) {
 
     function actionZoom(){
         zoomCallback();
@@ -41,4 +44,4 @@ function panAndZoom(element, sliderElement, visWin, zoomCallback) {
     zoom.x(visWin.x);
 
     element.call(zoom);
-}
+};

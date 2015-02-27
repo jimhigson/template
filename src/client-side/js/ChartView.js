@@ -1,6 +1,23 @@
 
+var d3 = require('d3');
+var $ = require('jquery');
+var _ = require('lodash');
 
-function chartView(chartElement, w, h, model) {
+var pairExtent = require('./pairs.js').pairExtent;
+
+var visibleWindow = require('./visibleWindow.js');
+var goalsRenderer = require('./goalsRenderer.js');
+var xAxisRenderer = require('./xAxisRenderer.js');
+var yAxisRenderer = require('./yAxisRenderer.js');
+var startLineRenderer = require('./startLineRenderer.js');
+var lineRenderer = require('./dataRenderer.js').line;
+var areaRenderer = require('./dataRenderer.js').area;
+var priceToolTipRenderer = require('./priceToolTipRenderer.js');
+var arrowsRenderer = require('./arrowsRenderer.js');
+var panAndZoom = require('./panAndZoom.js');
+
+
+module.exports = function chartView(chartElement, w, h, model) {
 
     var MARGIN = {top: 2, right: -25, bottom: 50, left: -25};
 
@@ -22,8 +39,6 @@ function chartView(chartElement, w, h, model) {
 
     setDimensions(dChart, dimensions);
 
-    yAxisView(d3.select('.axes .y'), visWin);
-
     dChart.select('.chartArea')
         .attr({
             x: visWin.x.range()[0],
@@ -32,15 +47,15 @@ function chartView(chartElement, w, h, model) {
             height: Math.abs(pairExtent(visWin.y.range()))
         });
 
-
     var renderers = [
-        goalsView( dChart.select('.goals'), visWin, _.map(model.goalsByDate) ),
-        xAxisView(d3.select('.axes .x'), visWin),
-        startLine(dChart.select('.startLine'), visWin, model.series),
+        goalsRenderer( dChart.select('.goals'), visWin, _.map(model.goalsByDate) ),
+        xAxisRenderer(d3.select('.axes .x'), visWin),
+        yAxisRenderer(d3.select('.axes .y'), visWin),
+        startLineRenderer(dChart.select('.startLine'), visWin, model.series),
 
-        dataRenderer.line(dChart.selectAll('path.median'), visWin, model.series, 50),
-        dataRenderer.area(dChart.select('path.moreLikely'), visWin, model.series, 30, 70),
-        dataRenderer.area(dChart.select('path.lessLikely'), visWin, model.series, 10, 90),
+        lineRenderer(dChart.selectAll('path.median'), visWin, model.series, 50),
+        areaRenderer(dChart.select('path.moreLikely'), visWin, model.series, 30, 70),
+        areaRenderer(dChart.select('path.lessLikely'), visWin, model.series, 10, 90),
 
         priceToolTipRenderer(
             dChart.selectAll('path.median.hoverSpace'),
@@ -49,7 +64,7 @@ function chartView(chartElement, w, h, model) {
             model.series
         ),
 
-        arrowsView(dChart.select('.arrows'), visWin)
+        arrowsRenderer(dChart.select('.arrows'), visWin)
     ];
 
     function render() {

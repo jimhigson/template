@@ -1,4 +1,6 @@
-function arrowsView(sel, visWin) {
+var translateXY = require('./svgUtils.js').translateXY;
+
+module.exports = function arrowsView(sel, visWin) {
     var nextArrow = sel.select('.next');
     var previousArrow = sel.select('.previous');
 
@@ -9,6 +11,5 @@ function arrowsView(sel, visWin) {
     previousArrow.attr('transform', translateXY(distanceFromEdge, yPx) );
     nextArrow.attr('transform', translateXY(visWin.width - 50 - distanceFromEdge, yPx) );
 
-    return function() {
-    }
-}
+    return function() {}
+};

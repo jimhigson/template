@@ -1,11 +1,13 @@
-function translateXY(x,y) {
-    return 'translate(' + x + ',' + y + ')';
-}
+module.exports = {
+    translateXY: function translateXY(x,y) {
+        return 'translate(' + x + ',' + y + ')';
+    },
 
-function translateX(x) {
-    return 'translate(' + x + ')';
-}
+    translateX: function translateX(x) {
+        return 'translate(' + x + ')';
+    },
 
-function scale(s){
-    return 'scale(' + s + ')';
-}
+    scale: function scale(s){
+        return 'scale(' + s + ')';
+    }
+};

@@ -1,4 +1,4 @@
-function startLine(element, visWin, series) {
+module.exports = function startLine(element, visWin, series) {
 
     var firstPoint = series[0];
 
@@ -28,4 +28,4 @@ function startLine(element, visWin, series) {
     }
 
     return positionInX;
-}
+};

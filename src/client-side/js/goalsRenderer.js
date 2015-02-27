@@ -1,6 +1,12 @@
-function goalsView(container, visWin, goalsByDate) {
+var _ = require('lodash');
 
-    var RADIUS = 22;
+var translateX = require('./svgUtils.js').translateX;
+var translateXY = require('./svgUtils.js').translateXY;
+var scale = require('./svgUtils.js').scale;
+
+module.exports = function goalsView(container, visWin, goalsByDate) {
+
+    var RADIUS = 24;
 
     var yOffset = visWin.height - RADIUS;
     container.attr('transform', translateXY(0, yOffset));
@@ -82,24 +88,21 @@ function goalsView(container, visWin, goalsByDate) {
         .attr('r', RADIUS);
 
     function addProbabilityLabel(dGoals) {
-        var labels = dGoals.append('svg:g').attr('class', 'probability');
+        var labels = dGoals.append('svg:g')
+            .attr('class', 'probability')
+            .attr('transform', translateXY(0.35 * RADIUS, 1.2 * -RADIUS));
 
         labels
             .append('svg:rect')
             .attr({
-                rx: 3,
-                ry: 3,
-                x: 4,
-                y: -25,
-                width: 22,
-                height: 20
+                rx: 3,      ry: 3,
+                width: 22,  height: 20
             });
 
         labels
             .append('svg:text')
             .attr({
-                x: 8,
-                y: -10
+                x: 3,       y: 15
             })
             .text(function(d){
                 return Math.round(d.probability * 100);

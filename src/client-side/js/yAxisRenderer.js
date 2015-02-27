@@ -1,4 +1,11 @@
-function yAxisView(element, visWin) {
+var _ = require('lodash');
+
+var pairExtent = require('./pairs.js').pairExtent;
+var interpolateBetweenPair = require('./pairs.js').interpolateBetweenPair;
+var translateX  = require('./svgUtils.js').translateX;
+var translateXY = require('./svgUtils.js').translateXY;
+
+module.exports = function yAxisView(element, visWin) {
 
     console.log('drawing y scale', visWin.y, 'as an axis on', element);
 
@@ -85,5 +92,5 @@ function yAxisView(element, visWin) {
 
     majorTicks.exit().remove();
 
-    return {};
+    return function(){};
 }

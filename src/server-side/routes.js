@@ -1,16 +1,10 @@
 var express = require('express'),
     consolidate = require('consolidate'),
     env = process.env.NODE_ENV,
-    development = (env == 'development');
+    development = (env == 'development'),
 
-var RAW_SCRIPTS = require('../client-side/js/sourceList.js').map(function (s) {
-        return s.replace('src/client-side/bower_components/', '')
-                .replace('src/client-side/js/', '');
-    }),
-    SCRIPTS = development ? RAW_SCRIPTS : ['js/all.js'],
+    SCRIPTS = ['js/all.js'],
     STYLES = development ? ['css/main.css'] : ['css-min/all.css'];
-
-console.log(RAW_SCRIPTS);
 
 module.exports = function routes(app) {
 

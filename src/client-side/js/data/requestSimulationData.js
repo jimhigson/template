@@ -1,4 +1,7 @@
-function requestSimulationData(callback) {
+var oboe = require('oboe');
+var _ = require('lodash');
+
+module.exports = function requestSimulationData(callback) {
 
     oboe('sample_forecast.json')
         .node({

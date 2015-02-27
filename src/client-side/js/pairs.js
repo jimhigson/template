@@ -15,3 +15,10 @@ function expandPair(pair, amount) {
 function positiveOnly(pair) {
     return [Math.max(pair[0], 0), pair[1]];
 }
+
+module.exports = {
+    pairExtent : pairExtent,
+    interpolateBetweenPair: interpolateBetweenPair,
+    expandPair: expandPair,
+    positiveOnly: positiveOnly
+}

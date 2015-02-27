@@ -1,6 +1,6 @@
 function goalsView(container, visWin, goalsByDate) {
 
-    var RADIUS = 19;
+    var RADIUS = 22;
 
     var yOffset = visWin.height - RADIUS;
     container.attr('transform', translateXY(0, yOffset));

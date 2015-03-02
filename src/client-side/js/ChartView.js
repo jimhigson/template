@@ -79,6 +79,6 @@ module.exports = function chartView(chartElement, w, h, model) {
     panAndZoom(dChart, $('#zoomer'), visWin, render);
 
     return {};
-}
+};
 
 

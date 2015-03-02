@@ -115,7 +115,7 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
             .each(function () {
                 var sel = d3.select(this);
 
-                var goalsInGroup = sel.selectAll('.goal');
+                var goalsInGroup = sel.selectAll('.goal').attr('transform', compactGoalCluster);
 
                 d3.select(this)
                     .on('mouseenter', function () {
@@ -126,9 +126,7 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
                     .on('mouseleave', function () {
                         goalsInGroup.transition().attr('transform', compactGoalCluster);
                     });
-            })
-            .selectAll('.goal')
-            .attr('transform', compactGoalCluster);
+            });
     }
 
     function createSvgForGoals() {

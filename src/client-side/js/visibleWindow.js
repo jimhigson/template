@@ -2,6 +2,7 @@ var TIME_CONSTANTS = require('./timeConstants.js');
 var pairExtent = require('./pairs.js').pairExtent;
 var expandPair = require('./pairs.js').expandPair;
 var positiveOnly = require('./pairs.js').positiveOnly;
+var fireEventOnSetterCalled = require('./fireEventOnSetterCalled');
 var d3 = require('d3');
 
 module.exports = function visibleWindow(dimensions, MARGIN, series, bus) {
@@ -21,9 +22,13 @@ module.exports = function visibleWindow(dimensions, MARGIN, series, bus) {
         var expandedTimeDomain = [  new Date(timeDomain[0] - extentMs * timeLeftExpandProportion),
                                     timeDomain[1]
                                  ];
-        return d3.time.scale()
+        var scale = d3.time.scale()
             .range([MARGIN.left, dimensions.width - MARGIN.right])
             .domain(expandedTimeDomain);
+
+        fireEventOnSetterCalled(bus, scale, 'domain', 'panOrZoom');
+
+        return scale;
     }
 
     function createYScale() {

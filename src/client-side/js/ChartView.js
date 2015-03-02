@@ -35,6 +35,8 @@ module.exports = function chartView(chartElement, w, h, eventBus) {
     setDimensions(dChart, dimensions);
 
     eventBus.once('dataLoaded', function(model) {
+        // todo: more individual renderers should be created early and
+        // listen for dataloaded themselves
 
         var visWin = visibleWindow(dimensions, MARGIN, model.series, eventBus);
 
@@ -46,8 +48,9 @@ module.exports = function chartView(chartElement, w, h, eventBus) {
                 height: Math.abs(pairExtent(visWin.y.range()))
             });
 
+        goalsRenderer(eventBus, dChart.select('.goals'), visWin, _.map(model.goalsByDate) );
+
         var renderers = [
-            goalsRenderer( dChart.select('.goals'), visWin, _.map(model.goalsByDate) ),
             xAxisRenderer(d3.select('.axes .x'), visWin),
             yAxisRenderer(d3.select('.axes .y'), visWin),
             startLineRenderer(dChart.select('.startLine'), visWin, model.series),

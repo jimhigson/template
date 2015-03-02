@@ -6,7 +6,7 @@ var scale = require('./svgUtils.js').scale;
 
 var π = Math.PI, τ = 2 * π;
 
-module.exports = function goalsView(container, visWin, goalsByDate) {
+module.exports = function goalsView(eventBus, container, visWin, goalsByDate) {
 
     var RADIUS = 24;
     var DENSITY_BOUNDARY = 9;
@@ -93,17 +93,6 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
         return (visWin.timeDensity() > DENSITY_BOUNDARY);
     }
 
-    function updateFrame() {
-        var bigNow = visibleWindowIsZoomedIn();
-
-        if( isBig !== bigNow ) {
-            isBig = bigNow;
-            applyZoomToGoalGroup(scalers.transition(), isBig);
-        }
-
-        dGoalGroups.attr('transform', goalTranslate);
-    }
-
     function initGroupExpandAndCompact(dGoalGroups) {
         var compactGoalCluster = _.partial(multipleGoalOffset, true);
         var expandedGoalCluster = _.partial(multipleGoalOffset, false);
@@ -165,6 +154,17 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
 
     }
 
+    function updateFrame() {
+        var bigNow = visibleWindowIsZoomedIn();
+
+        if( isBig !== bigNow ) {
+            isBig = bigNow;
+            applyZoomToGoalGroup(scalers.transition(), isBig);
+        }
+
+        dGoalGroups.attr('transform', goalTranslate);
+    }
+
     initContainerOffset();
     createSvgForGoals();
     addProbabilityLabel(container.selectAll('.goals .mid .goal'));
@@ -176,5 +176,9 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
 
     var isBig = visibleWindowIsZoomedIn();
     applyZoomToGoalGroup(scalers, isBig);
-    return updateFrame;
+
+    eventBus.on('panOrZoom', function(){
+        updateFrame();
+    });
+    updateFrame();
 };

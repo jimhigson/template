@@ -9,11 +9,29 @@ var π = Math.PI, τ = 2 * π;
 module.exports = function goalsView(container, visWin, goalsByDate) {
 
     var RADIUS = 24;
+    var DENSITY_BOUNDARY = 9;
 
-    var yOffset = visWin.height - RADIUS;
-    container.attr('transform', translateXY(0, yOffset));
+    /** align container's local origin with the origin of the y-axis */
+    function initContainerOffset() {
+        var yOffset = visWin.height - RADIUS;
+        container.attr('transform', translateXY(0, yOffset));
+    }
 
-    var densityBoundary = 9;
+    function createPanesForOverpainting(sel){
+        sel.each(function(d){
+            var sel = d3.select(this);
+
+            if(d.length > 1) {
+                sel.append('g').attr('class', 'back');
+                sel.append('g').attr('class', 'mid');
+                sel.append('g').attr('class', 'front');
+            } else {
+                sel.append('g').attr('class', 'mid');
+            }
+        });
+
+        return sel.selectAll('g');
+    }
 
     var dGoalGroups = container
         .selectAll('.goalsOnDate')
@@ -36,14 +54,16 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
             .attr('class', 'hover-space')
             .attr('r', 1.1 * RADIUS);
 
-    var dNewGoals = dGoalGroups
-        .append('svg:g')
-            .attr('class', 'scaler')
-                .selectAll('.goal')
-                .data(function(goalArrayForDate){return goalArrayForDate})
-                    .enter()
-                        .append('svg:g')
-                            .attr('class', 'goal');
+    var dNewGoals =
+        createPanesForOverpainting(
+            dGoalGroups
+                .append('svg:g')
+                    .attr('class', 'scaler')
+        )
+        .selectAll('.goal')
+        .data(function(goalArrayForDate){return goalArrayForDate})
+        .enter()
+        .append('svg:g').attr('class', 'goal');
 
     function multipleGoalOffset(compact, d, i) {
         var numberOfGoals = d.dateGroup.length;
@@ -111,8 +131,7 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
             });
     }
 
-    addProbabilityLabel(dNewGoals);
-
+    addProbabilityLabel(container.selectAll('.goals .mid .goal'));
 
     function goalTranslate(goalGroups) {
 
@@ -121,36 +140,36 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
         return translateX(x);
     }
 
-    function scaleTransform(isBig) {
-        return translateXY(0, isBig? 0: RADIUS/2) + scale(isBig? 1: 0.5);
-    }
-
     var scalers = dGoalGroups.selectAll('.scaler');
 
-    function rescale(transition) {
-        var target = transition? scalers.transition() : scalers;
+    function applyZoomToGoalGroup(groupsSelection, isLarge) {
 
-        target.attr('transform', scaleTransform(isBig));
+        var yTranslate = isLarge ? 0 : RADIUS / 2;
+        var scaleFactor = isLarge ? 1 : 0.5;
+        var transform = translateXY(0, yTranslate) + scale(scaleFactor);
 
-        container.classed('isBig', isBig);
+        groupsSelection.attr('transform', transform);
+
+        container.classed('isBig', isLarge);
     }
 
-    function zoomedIn() {
-        return (visWin.timeDensity() > densityBoundary);
+    function visibleWindowIsZoomedIn() {
+        return (visWin.timeDensity() > DENSITY_BOUNDARY);
     }
 
-    function fixSizesAndTraslate() {
-        var bigNow = zoomedIn();
+    function updateFrame() {
+        var bigNow = visibleWindowIsZoomedIn();
 
         if( isBig != bigNow ) {
             isBig = bigNow;
-            rescale(true);
+            applyZoomToGoalGroup(scalers.transition(), isBig);
         }
 
         dGoalGroups.attr('transform', goalTranslate);
     }
 
-    var isBig = zoomedIn();
-    rescale(false);
-    return fixSizesAndTraslate;
+    initContainerOffset();
+    var isBig = visibleWindowIsZoomedIn();
+    applyZoomToGoalGroup(scalers, isBig);
+    return updateFrame;
 };

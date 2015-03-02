@@ -93,12 +93,27 @@ body {
       vector-effect:non-scaling-stroke;
     }
 
+    .back .goal circle {
+      stroke-width: 2.5;
+      stroke: white;
+      fill:none;
+    }
+    .mid .goal circle {
+      fill: #1A93C2;
+      stroke: none;
+    }
+    .goalsOnDate[goal-quantity='1'] .mid .goal circle {
+      stroke-width: 1.5;
+      stroke: white;
+    }
+    .front .goal circle {
+      stroke-width: 1;
+      stroke: $chartMinorLine;
+      fill:none;
+    }
+
     .goal {
-      circle {
-        fill: #1A93C2;
-        stroke: white;
-        stroke-width: 1.5;
-      }
+
       rect {
         fill: $goodProbability;
         stroke: rgba(black, 0.2);

@@ -71,10 +71,7 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
         return scale(scaleFactor) + translateXY(x,y);
     }
 
-    var compactGoalCluster = _.partial(multipleGoalOffset, true);
-    var expandedGoalCluster = _.partial(multipleGoalOffset, false);
-
-        function goalTranslate(goalGroups) {
+    function goalTranslate(goalGroups) {
 
         var x = Math.round(visWin.x(goalGroups[0].date));
 
@@ -105,6 +102,33 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
         }
 
         dGoalGroups.attr('transform', goalTranslate);
+    }
+
+    function initGroupExpandAndCompact(dGoalGroups) {
+        var compactGoalCluster = _.partial(multipleGoalOffset, true);
+        var expandedGoalCluster = _.partial(multipleGoalOffset, false);
+
+        dGoalGroups
+            .filter(function (d) {
+                return d.length > 1;
+            })
+            .each(function () {
+                var sel = d3.select(this);
+
+                var goalsInGroup = sel.selectAll('.goal');
+
+                d3.select(this)
+                    .on('mouseenter', function () {
+                        if (isBig) {
+                            goalsInGroup.transition().attr('transform', expandedGoalCluster);
+                        }
+                    })
+                    .on('mouseleave', function () {
+                        goalsInGroup.transition().attr('transform', compactGoalCluster);
+                    });
+            })
+            .selectAll('.goal')
+            .attr('transform', compactGoalCluster);
     }
 
     function createSvgForGoals() {
@@ -141,36 +165,17 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
             .append('svg:circle')
             .attr('r', RADIUS);
 
-        dGoalGroups
-            .filter(function(d){
-                return d.length > 1;
-            })
-            .each(function() {
-                var sel = d3.select(this);
-
-                var goalsInGroup = sel.selectAll('.goal');
-
-                d3.select(this)
-                    .on('mouseenter', function(){
-                        if( isBig ) {
-                            goalsInGroup.transition().attr('transform', expandedGoalCluster);
-                        }
-                    })
-                    .on('mouseleave', function(){
-                        goalsInGroup.transition().attr('transform', compactGoalCluster);
-                    });
-            })
-            .selectAll('.goal')
-                .attr('transform', compactGoalCluster);
     }
 
+    initContainerOffset();
     createSvgForGoals();
+    addProbabilityLabel(container.selectAll('.goals .mid .goal'));
 
     var scalers = container.selectAll('.scaler');
     var dGoalGroups = container.selectAll('.goalsOnDate');
 
-    initContainerOffset();
-    addProbabilityLabel(container.selectAll('.goals .mid .goal'));
+    initGroupExpandAndCompact(dGoalGroups);
+
     var isBig = visibleWindowIsZoomedIn();
     applyZoomToGoalGroup(scalers, isBig);
     return updateFrame;

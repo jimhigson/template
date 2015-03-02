@@ -4,7 +4,7 @@ var expandPair = require('./pairs.js').expandPair;
 var positiveOnly = require('./pairs.js').positiveOnly;
 var d3 = require('d3');
 
-module.exports = function visibleWindow(dimensions, MARGIN, series) {
+module.exports = function visibleWindow(dimensions, MARGIN, series, bus) {
 
     var timeLeftExpandProportion = 0.25;
 

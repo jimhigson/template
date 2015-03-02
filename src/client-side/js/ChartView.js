@@ -17,7 +17,7 @@ var arrowsRenderer = require('./arrowsRenderer.js');
 var panAndZoom = require('./panAndZoom.js');
 
 
-module.exports = function chartView(chartElement, w, h, model) {
+module.exports = function chartView(chartElement, w, h, eventBus) {
 
     var MARGIN = {top: 2, right: -25, bottom: 50, left: -25};
 
@@ -31,54 +31,52 @@ module.exports = function chartView(chartElement, w, h, model) {
         dChart.select('rect.bg').attr(dimensions);
     }
 
-    var visWin = visibleWindow(dimensions, MARGIN, model.series);
-
-    console.log('chartView: creating chart at element', chartElement, 'for data', model);
-
     var dChart = d3.select(chartElement);
-
     setDimensions(dChart, dimensions);
 
-    dChart.select('.chartArea')
-        .attr({
-            x: visWin.x.range()[0],
-            width: Math.abs(pairExtent(visWin.x.range())),
-            y: visWin.y.range()[1],
-            height: Math.abs(pairExtent(visWin.y.range()))
-        });
+    eventBus.once('dataLoaded', function(model) {
 
-    var renderers = [
-        goalsRenderer( dChart.select('.goals'), visWin, _.map(model.goalsByDate) ),
-        xAxisRenderer(d3.select('.axes .x'), visWin),
-        yAxisRenderer(d3.select('.axes .y'), visWin),
-        startLineRenderer(dChart.select('.startLine'), visWin, model.series),
+        var visWin = visibleWindow(dimensions, MARGIN, model.series, eventBus);
 
-        lineRenderer(dChart.selectAll('path.median'), visWin, model.series, 50),
-        areaRenderer(dChart.select('path.moreLikely'), visWin, model.series, 30, 70),
-        areaRenderer(dChart.select('path.lessLikely'), visWin, model.series, 10, 90),
+        dChart.select('.chartArea')
+            .attr({
+                x: visWin.x.range()[0],
+                width: Math.abs(pairExtent(visWin.x.range())),
+                y: visWin.y.range()[1],
+                height: Math.abs(pairExtent(visWin.y.range()))
+            });
 
-        priceToolTipRenderer(
-            dChart.selectAll('path.median.hoverSpace'),
-            dChart.selectAll('.priceTooltip'),
-            visWin,
-            model.series
-        ),
+        var renderers = [
+            goalsRenderer( dChart.select('.goals'), visWin, _.map(model.goalsByDate) ),
+            xAxisRenderer(d3.select('.axes .x'), visWin),
+            yAxisRenderer(d3.select('.axes .y'), visWin),
+            startLineRenderer(dChart.select('.startLine'), visWin, model.series),
 
-        arrowsRenderer(dChart.select('.arrows'), visWin)
-    ];
+            lineRenderer(dChart.selectAll('path.median'), visWin, model.series, 50),
+            areaRenderer(dChart.select('path.moreLikely'), visWin, model.series, 30, 70),
+            areaRenderer(dChart.select('path.lessLikely'), visWin, model.series, 10, 90),
 
-    function render() {
-        renderers.forEach(function(r){r()});
-    }
+            priceToolTipRenderer(
+                dChart.selectAll('path.median.hoverSpace'),
+                dChart.selectAll('.priceTooltip'),
+                visWin,
+                model.series
+            ),
 
-    render();
+            arrowsRenderer(dChart.select('.arrows'), visWin)
+        ];
 
-    // TODO: visWin should fire an event which is picked up by renderers
-    // which care about zooming. This would allow different kinds of
-    // re-rendering (resize window, data change, pan, zoom...)
-    panAndZoom(dChart, $('#zoomer'), visWin, render);
+        function render() {
+            renderers.forEach(function(r){r()});
+        }
 
-    return {};
+        render();
+
+        // TODO: visWin should fire an event which is picked up by renderers
+        // which care about zooming. This would allow different kinds of
+        // re-rendering (resize window, data change, pan, zoom...)
+        panAndZoom(dChart, $('#zoomer'), visWin, render);
+    });
 };
 
 

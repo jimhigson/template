@@ -35,7 +35,11 @@ TODO
 * [ ] draggable goals?
 * [x] put mouse near line to see number in a tool thing
 * [x] adjust to window size
-* [ ] Browserify
+* [x] Browserify
+* [ ] Move to event-bus based callbacks from viswin, not panAndZoom calling out to all renderers
+* [ ] Introduce karma/jasmine
+    * [ ] Write some tests
+* [ ] Greater use of templates
 
 * [ ] Split into SVG and 'the drawer'
 * [ ] Connect to real data service

@@ -33,79 +33,6 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
         return sel.selectAll('g');
     }
 
-    var dGoalGroups = container
-        .selectAll('.goalsOnDate')
-        .data(goalsByDate)
-        .enter()
-            .append('svg:g')
-                .attr('class', 'goalsOnDate')
-                .attr('data-goal-group', function(d, i){
-                    return i;
-                })
-                .attr('goal-quantity', function(d){
-                    return d.length;
-                })
-                .classed('multiple-goals', function(d){
-                    return d.length > 1;
-                });
-
-    dGoalGroups
-        .append('svg:circle')
-            .attr('class', 'hover-space')
-            .attr('r', 1.1 * RADIUS);
-
-    createPanesForOverpainting(
-        dGoalGroups
-            .append('svg:g')
-                .attr('class', 'scaler')
-    )
-        .selectAll('.goal')
-        .data(function(goalArrayForDate){return goalArrayForDate})
-        .enter()
-        .append('svg:g').attr('class', 'goal')
-        .append('svg:circle')
-        .attr('r', RADIUS);
-
-    function multipleGoalOffset(compact, d, i) {
-        var numberOfGoals = d.dateGroup.length;
-
-        var scaleFactor = compact? Math.pow(0.85, numberOfGoals -1) : 1;
-
-        var φ = i * τ/numberOfGoals + π;
-
-        var proportionalDistanceFromCentre = Math.pow(1.2, numberOfGoals -1);
-        var offsetFromCentre = RADIUS * (compact ? 0.5 : 1) * proportionalDistanceFromCentre;
-        var x = offsetFromCentre * Math.sin(φ);
-        var y = offsetFromCentre * Math.cos(φ);
-
-        return scale(scaleFactor) + translateXY(x,y);
-    }
-
-    var compactGoalCluster = _.partial(multipleGoalOffset, true);
-    var expandedGoalCluster = _.partial(multipleGoalOffset, false);
-
-    dGoalGroups
-        .filter(function(d){
-            return d.length > 1;
-        })
-        .each(function() {
-            var sel = d3.select(this);
-
-            var goalsInGroup = sel.selectAll('.goal');
-
-            d3.select(this)
-                .on('mouseenter', function(){
-                    if( isBig ) {
-                        goalsInGroup.transition().attr('transform', expandedGoalCluster);
-                    }
-                })
-                .on('mouseleave', function(){
-                    goalsInGroup.transition().attr('transform', compactGoalCluster);
-                });
-        })
-        .selectAll('.goal')
-            .attr('transform', compactGoalCluster);
-
     function addProbabilityLabel(dGoals) {
         var labels = dGoals.append('svg:g')
             .attr('class', 'probability')
@@ -128,16 +55,31 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
             });
     }
 
-    addProbabilityLabel(container.selectAll('.goals .mid .goal'));
+    function multipleGoalOffset(compact, d, i) {
+        var numberOfGoals = d.dateGroup.length;
+        var exponent = numberOfGoals - 1;
 
-    function goalTranslate(goalGroups) {
+        var scaleFactor = compact? Math.pow(0.85, exponent) : 1;
+
+        var φ = i * τ/numberOfGoals + π;
+
+        var proportionalDistanceFromCentre = Math.pow(1.2, exponent);
+        var offsetFromCentre = RADIUS * (compact ? 0.5 : 1) * proportionalDistanceFromCentre;
+        var x = offsetFromCentre * Math.sin(φ);
+        var y = offsetFromCentre * Math.cos(φ);
+
+        return scale(scaleFactor) + translateXY(x,y);
+    }
+
+    var compactGoalCluster = _.partial(multipleGoalOffset, true);
+    var expandedGoalCluster = _.partial(multipleGoalOffset, false);
+
+        function goalTranslate(goalGroups) {
 
         var x = Math.round(visWin.x(goalGroups[0].date));
 
         return translateX(x);
     }
-
-    var scalers = dGoalGroups.selectAll('.scaler');
 
     function applyZoomToGoalGroup(groupsSelection, isLarge) {
 
@@ -157,7 +99,7 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
     function updateFrame() {
         var bigNow = visibleWindowIsZoomedIn();
 
-        if( isBig != bigNow ) {
+        if( isBig !== bigNow ) {
             isBig = bigNow;
             applyZoomToGoalGroup(scalers.transition(), isBig);
         }
@@ -165,7 +107,70 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
         dGoalGroups.attr('transform', goalTranslate);
     }
 
+    function createSvgForGoals() {
+        var dGoalGroups = container
+            .selectAll('.goalsOnDate')
+            .data(goalsByDate)
+            .enter()
+                .append('svg:g')
+                    .attr('class', 'goalsOnDate')
+                    .attr('data-goal-group', function(d, i){
+                        return i;
+                    })
+                    .attr('goal-quantity', function(d){
+                        return d.length;
+                    })
+                    .classed('multiple-goals', function(d){
+                        return d.length > 1;
+                    });
+
+        dGoalGroups
+            .append('svg:circle')
+                .attr('class', 'hover-space')
+                .attr('r', 1.1 * RADIUS);
+
+        var scalers = dGoalGroups
+                .append('svg:g')
+                    .attr('class', 'scaler');
+
+        createPanesForOverpainting(scalers)
+            .selectAll('.goal')
+            .data(function(goalArrayForDate){return goalArrayForDate})
+            .enter()
+            .append('svg:g').attr('class', 'goal')
+            .append('svg:circle')
+            .attr('r', RADIUS);
+
+        dGoalGroups
+            .filter(function(d){
+                return d.length > 1;
+            })
+            .each(function() {
+                var sel = d3.select(this);
+
+                var goalsInGroup = sel.selectAll('.goal');
+
+                d3.select(this)
+                    .on('mouseenter', function(){
+                        if( isBig ) {
+                            goalsInGroup.transition().attr('transform', expandedGoalCluster);
+                        }
+                    })
+                    .on('mouseleave', function(){
+                        goalsInGroup.transition().attr('transform', compactGoalCluster);
+                    });
+            })
+            .selectAll('.goal')
+                .attr('transform', compactGoalCluster);
+    }
+
+    createSvgForGoals();
+
+    var scalers = container.selectAll('.scaler');
+    var dGoalGroups = container.selectAll('.goalsOnDate');
+
     initContainerOffset();
+    addProbabilityLabel(container.selectAll('.goals .mid .goal'));
     var isBig = visibleWindowIsZoomedIn();
     applyZoomToGoalGroup(scalers, isBig);
     return updateFrame;

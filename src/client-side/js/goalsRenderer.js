@@ -54,16 +54,17 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
             .attr('class', 'hover-space')
             .attr('r', 1.1 * RADIUS);
 
-    var dNewGoals =
-        createPanesForOverpainting(
-            dGoalGroups
-                .append('svg:g')
-                    .attr('class', 'scaler')
-        )
+    createPanesForOverpainting(
+        dGoalGroups
+            .append('svg:g')
+                .attr('class', 'scaler')
+    )
         .selectAll('.goal')
         .data(function(goalArrayForDate){return goalArrayForDate})
         .enter()
-        .append('svg:g').attr('class', 'goal');
+        .append('svg:g').attr('class', 'goal')
+        .append('svg:circle')
+        .attr('r', RADIUS);
 
     function multipleGoalOffset(compact, d, i) {
         var numberOfGoals = d.dateGroup.length;
@@ -104,10 +105,6 @@ module.exports = function goalsView(container, visWin, goalsByDate) {
         })
         .selectAll('.goal')
             .attr('transform', compactGoalCluster);
-
-    dNewGoals
-        .append('svg:circle')
-        .attr('r', RADIUS);
 
     function addProbabilityLabel(dGoals) {
         var labels = dGoals.append('svg:g')

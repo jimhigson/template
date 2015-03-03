@@ -181,7 +181,7 @@ module.exports = function goalsRenderer(eventBus, container, visWin) {
 
             dGoalGroups.attr('transform', goalTranslate);
         }
-ª
+
         eventBus.on('panOrZoom', updateFrame);
         updateFrame();
     }

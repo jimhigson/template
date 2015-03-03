@@ -9,4 +9,4 @@ module.exports = function(eventBus, container, visWin) {
             y: visWin.y.range()[1],
             height: Math.abs(pairExtent(visWin.y.range()))
         });
-};ªº
+};

@@ -177,8 +177,6 @@ module.exports = function goalsView(eventBus, container, visWin, goalsByDate) {
     var isBig = visibleWindowIsZoomedIn();
     applyZoomToGoalGroup(scalers, isBig);
 
-    eventBus.on('panOrZoom', function(){
-        updateFrame();
-    });
+    eventBus.on('panOrZoom', updateFrame);
     updateFrame();
 };

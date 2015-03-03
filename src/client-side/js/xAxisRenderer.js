@@ -4,7 +4,7 @@ var _ = require('lodash');
 var translateX = require('./svgUtils.js').translateX;
 var translateXY = require('./svgUtils.js').translateXY;
 
-module.exports = function xAxisView(element, visWin) {
+module.exports = function xAxisView(eventBus, element, visWin) {
 
     var YEAR_ONLY_FORMAT = d3.time.format('%Y');
     var MONTH_AND_YEAR_FORMAT = d3.time.format('%b %Y');
@@ -41,7 +41,7 @@ module.exports = function xAxisView(element, visWin) {
         }
     }
 
-    return function() {
+    function updateFrame() {
 
         var majorTickValues = getMajorTickValues();
         var majorTicks = element
@@ -101,4 +101,6 @@ module.exports = function xAxisView(element, visWin) {
         minorTicks.exit().remove();
     }
 
-}
+    eventBus.on('panOrZoom', updateFrame);
+    updateFrame();
+};

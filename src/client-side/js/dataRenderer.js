@@ -9,30 +9,36 @@ function yComponent(yScale, percentile) {
     return function(d) { return Math.round(yScale(d.percentiles[percentile])) };
 }
 
-function lineRenderer(element, visWin, series, percentile) {
+function lineRenderer(eventBus, element, visWin, series, percentile) {
 
     var line = d3.svg.line()
         .x(xComponent(visWin.x))
         .y(yComponent(visWin.y, percentile));
 
-    return function() {
+    function updateFrame() {
         element
             .datum(series)
             .attr("d", line );
     }
+
+    eventBus.on('panOrZoom', updateFrame);
+    updateFrame();
 }
 
-function areaRenderer(element, visWin, series, lowerPercentile, upperPercentile) {
+function areaRenderer(eventBus, element, visWin, series, lowerPercentile, upperPercentile) {
     var area = d3.svg.area()
         .x(xComponent(visWin.x))
         .y0(yComponent(visWin.y, lowerPercentile))
         .y1(yComponent(visWin.y, upperPercentile));
 
-    return function() {
+    function updateFrame() {
         element
             .datum(series)
             .attr("d", area );
     }
+
+    eventBus.on('panOrZoom', updateFrame);
+    updateFrame();
 }
 
 module.exports = {

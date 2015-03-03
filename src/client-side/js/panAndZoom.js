@@ -1,11 +1,8 @@
 var d3 = require('d3');
 var pairExtent = require('./pairs.js').pairExtent;
 
-module.exports = function panAndZoom(element, sliderElement, visWin, zoomCallback) {
+module.exports = function panAndZoom(element, sliderElement, visWin) {
 
-    function actionZoom(){
-        zoomCallback();
-    }
 
     var fullTimeExtend = pairExtent(visWin.fullDateRange);
     var originalTimeExtent = visWin.timeExtent();
@@ -20,8 +17,6 @@ module.exports = function panAndZoom(element, sliderElement, visWin, zoomCallbac
         .scaleExtent([minScale, maxScale])
         .on('zoom', function() {
             updateSlider();
-
-            actionZoom();
         });
 
     function updateSlider() {
@@ -37,8 +32,6 @@ module.exports = function panAndZoom(element, sliderElement, visWin, zoomCallbac
         zoom.scale(sliderElement.val());
 
         visWin.centreOnTime(timeCentre);
-
-        actionZoom();
     });
 
     zoom.x(visWin.x);

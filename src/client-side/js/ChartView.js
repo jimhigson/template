@@ -49,36 +49,25 @@ module.exports = function chartView(chartElement, w, h, eventBus) {
             });
 
         goalsRenderer(eventBus, dChart.select('.goals'), visWin, _.map(model.goalsByDate) );
+        xAxisRenderer(eventBus, d3.select('.axes .x'), visWin);
+        yAxisRenderer(eventBus, d3.select('.axes .y'), visWin);
+        startLineRenderer(eventBus, dChart.select('.startLine'), visWin, model.series);
 
-        var renderers = [
-            xAxisRenderer(d3.select('.axes .x'), visWin),
-            yAxisRenderer(d3.select('.axes .y'), visWin),
-            startLineRenderer(dChart.select('.startLine'), visWin, model.series),
+        lineRenderer(eventBus, dChart.selectAll('path.median'), visWin, model.series, 50);
+        areaRenderer(eventBus, dChart.select('path.moreLikely'), visWin, model.series, 30, 70);
+        areaRenderer(eventBus, dChart.select('path.lessLikely'), visWin, model.series, 10, 90);
 
-            lineRenderer(dChart.selectAll('path.median'), visWin, model.series, 50),
-            areaRenderer(dChart.select('path.moreLikely'), visWin, model.series, 30, 70),
-            areaRenderer(dChart.select('path.lessLikely'), visWin, model.series, 10, 90),
+        priceToolTipRenderer(
+            eventBus,
+            dChart.selectAll('path.median.hoverSpace'),
+            dChart.selectAll('.priceTooltip'),
+            visWin,
+            model.series
+        );
 
-            priceToolTipRenderer(
-                dChart.selectAll('path.median.hoverSpace'),
-                dChart.selectAll('.priceTooltip'),
-                visWin,
-                model.series
-            ),
+        arrowsRenderer(eventBus, dChart.select('.arrows'), visWin);
 
-            arrowsRenderer(dChart.select('.arrows'), visWin)
-        ];
-
-        function render() {
-            renderers.forEach(function(r){r()});
-        }
-
-        render();
-
-        // TODO: visWin should fire an event which is picked up by renderers
-        // which care about zooming. This would allow different kinds of
-        // re-rendering (resize window, data change, pan, zoom...)
-        panAndZoom(dChart, $('#zoomer'), visWin, render);
+        panAndZoom(dChart, $('#zoomer'), visWin);
     });
 };
 

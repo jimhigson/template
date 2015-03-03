@@ -1,4 +1,4 @@
-module.exports = function startLine(element, visWin, series) {
+module.exports = function startLine(eventBus, element, visWin, series) {
 
     var firstPoint = series[0];
 
@@ -11,9 +11,7 @@ module.exports = function startLine(element, visWin, series) {
         cy: visWin.y(firstPoint.percentiles[50])
     });
 
-    positionInX();
-
-    function positionInX() {
+    function updateFrame() {
 
         var xPx = visWin.x(firstPoint.date);
 
@@ -27,5 +25,6 @@ module.exports = function startLine(element, visWin, series) {
         });
     }
 
-    return positionInX;
+    eventBus.on('panOrZoom', updateFrame);
+    updateFrame();
 };

@@ -5,7 +5,7 @@ var interpolateBetweenPair = require('./pairs.js').interpolateBetweenPair;
 var translateX  = require('./svgUtils.js').translateX;
 var translateXY = require('./svgUtils.js').translateXY;
 
-module.exports = function yAxisView(element, visWin) {
+module.exports = function yAxisView(eventBus, element, visWin) {
 
     console.log('drawing y scale', visWin.y, 'as an axis on', element);
 
@@ -91,6 +91,4 @@ module.exports = function yAxisView(element, visWin) {
             .text(moneyFormat);
 
     majorTicks.exit().remove();
-
-    return function(){};
-}
+};

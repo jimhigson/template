@@ -1,5 +1,6 @@
-module.exports = function startLine(eventBus, element, visWin, series) {
+module.exports = function startLine(eventBus, element, visWin, model) {
 
+    var series = model.series;
     var firstPoint = series[0];
 
     element.select('line').attr({

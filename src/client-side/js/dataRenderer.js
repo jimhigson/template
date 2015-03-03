@@ -9,7 +9,10 @@ function yComponent(yScale, percentile) {
     return function(d) { return Math.round(yScale(d.percentiles[percentile])) };
 }
 
-function lineRenderer(eventBus, element, visWin, series, percentile) {
+function lineRenderer(eventBus, element, visWin, model, config) {
+
+    var series = model.series;
+    var percentile = config.percentile;
 
     var line = d3.svg.line()
         .x(xComponent(visWin.x))
@@ -25,7 +28,12 @@ function lineRenderer(eventBus, element, visWin, series, percentile) {
     updateFrame();
 }
 
-function areaRenderer(eventBus, element, visWin, series, lowerPercentile, upperPercentile) {
+function areaRenderer(eventBus, element, visWin, model, config) {
+
+    var series = model.series;
+    var upperPercentile = config.upperPercentile;
+    var lowerPercentile = config.lowerPercentile;
+
     var area = d3.svg.area()
         .x(xComponent(visWin.x))
         .y0(yComponent(visWin.y, lowerPercentile))

@@ -5,7 +5,7 @@ var positiveOnly = require('./pairs.js').positiveOnly;
 var fireEventOnSetterCalled = require('./fireEventOnSetterCalled');
 var d3 = require('d3');
 
-module.exports = function visibleWindow(dimensions, MARGIN, series, bus) {
+module.exports = function visibleWindow(bus, dimensions, MARGIN, series) {
 
     var timeLeftExpandProportion = 0.25;
 

@@ -35,10 +35,13 @@ module.exports = function chartView(chartElement, w, h, eventBus) {
     setDimensions(dChart, dimensions);
 
     eventBus.once('dataLoaded', function(model) {
-        // todo: more individual renderers should be created early and
-        // listen for dataloaded themselves
 
-        var visWin = visibleWindow(dimensions, MARGIN, model.series, eventBus);
+        var visWin = visibleWindow(eventBus, dimensions, MARGIN, model.series);
+
+        function addRenderer(renderer, elementCss, rendererParams) {
+           // TODO: don't pass the model. Let renderers wait themselves for it to arrive
+           renderer(eventBus, dChart.select(elementCss), visWin, model, rendererParams || {});
+        }
 
         dChart.select('.chartArea')
             .attr({
@@ -48,14 +51,14 @@ module.exports = function chartView(chartElement, w, h, eventBus) {
                 height: Math.abs(pairExtent(visWin.y.range()))
             });
 
-        goalsRenderer(eventBus, dChart.select('.goals'), visWin, _.map(model.goalsByDate) );
-        xAxisRenderer(eventBus, d3.select('.axes .x'), visWin);
-        yAxisRenderer(eventBus, d3.select('.axes .y'), visWin);
-        startLineRenderer(eventBus, dChart.select('.startLine'), visWin, model.series);
-
-        lineRenderer(eventBus, dChart.selectAll('path.median'), visWin, model.series, 50);
-        areaRenderer(eventBus, dChart.select('path.moreLikely'), visWin, model.series, 30, 70);
-        areaRenderer(eventBus, dChart.select('path.lessLikely'), visWin, model.series, 10, 90);
+        addRenderer(goalsRenderer, '.goals');
+        addRenderer(xAxisRenderer, '.axes .x');
+        addRenderer(yAxisRenderer, '.axes .y');
+        addRenderer(startLineRenderer, '.startLine');
+        addRenderer(lineRenderer, 'path.median', {percentile: 50});
+        addRenderer(areaRenderer, 'path.moreLikely', {lowerPercentile: 30, upperPercentile: 70});
+        addRenderer(areaRenderer, 'path.lessLikely', {lowerPercentile: 10, upperPercentile: 90});
+        addRenderer(arrowsRenderer, '.arrows');
 
         priceToolTipRenderer(
             eventBus,
@@ -64,8 +67,6 @@ module.exports = function chartView(chartElement, w, h, eventBus) {
             visWin,
             model.series
         );
-
-        arrowsRenderer(eventBus, dChart.select('.arrows'), visWin);
 
         panAndZoom(dChart, $('#zoomer'), visWin);
     });

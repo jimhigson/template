@@ -6,7 +6,9 @@ var scale = require('./svgUtils.js').scale;
 
 var π = Math.PI, τ = 2 * π;
 
-module.exports = function goalsView(eventBus, container, visWin, goalsByDate) {
+module.exports = function goalsView(eventBus, container, visWin, model) {
+
+    var goalsByDate = _.map(model.goalsByDate);
 
     var RADIUS = 24;
     var DENSITY_BOUNDARY = 9;

@@ -1,10 +1,13 @@
 var d3 = require('d3');
 var pairExtent = require('./pairs.js').pairExtent;
 
-module.exports = function panAndZoom(element, sliderElement, visWin) {
+module.exports = function panAndZoom(element, sliderElement, visWin, model) {
 
 
-    var fullTimeExtend = pairExtent(visWin.fullDateRange);
+    var fullDateRange = d3.extent(model.series, function (d) {
+        return d.date;
+    });
+    var fullTimeExtend = pairExtent(fullDateRange);
     var originalTimeExtent = visWin.timeExtent();
 
     var minScale = originalTimeExtent / fullTimeExtend * 0.8;

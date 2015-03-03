@@ -32,13 +32,13 @@ module.exports = function chartView(chartElement, w, h, eventBus) {
     var dChart = d3.select(chartElement);
     setDimensions(dChart, dimensions);
 
-    eventBus.once('dataLoaded', function(model) {
+    var visWin = visibleWindow(eventBus, dimensions, MARGIN);
 
-        var visWin = visibleWindow(eventBus, dimensions, MARGIN, model.series);
+    eventBus.once('dataLoaded', function(model) {
 
         function addRenderer(renderer, elementCss, rendererParams) {
            // TODO: don't pass the model. Let renderers wait themselves for it to arrive
-           renderer(eventBus, dChart.select(elementCss), visWin, model, rendererParams || {});
+           renderer(eventBus, dChart.selectAll(elementCss), visWin, model, rendererParams || {});
         }
 
         addRenderer(chartAreaRenderer, '.chartArea');
@@ -59,7 +59,7 @@ module.exports = function chartView(chartElement, w, h, eventBus) {
             model.series
         );
 
-        panAndZoom(dChart, $('#zoomer'), visWin);
+        panAndZoom(dChart, $('#zoomer'), visWin, model);
     });
 };
 

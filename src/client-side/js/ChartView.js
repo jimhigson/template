@@ -15,14 +15,9 @@ var priceToolTipRenderer = require('./priceToolTipRenderer.js');
 var arrowsRenderer = require('./arrowsRenderer.js');
 var panAndZoom = require('./panAndZoom.js');
 
-module.exports = function chartView(chartElement, w, h, eventBus) {
+module.exports = function chartView(chartElement, dimensions, eventBus) {
 
     var MARGIN = {top: 2, right: -25, bottom: 50, left: -25};
-
-    var dimensions = {
-        width: w,
-        height: h
-    };
 
     function setDimensions(dChart, dimensions) {
         dChart.attr(dimensions);

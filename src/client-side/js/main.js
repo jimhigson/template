@@ -10,7 +10,13 @@ $(function() {
     var emitDataLoaded = eventBus.emit.bind(eventBus, 'dataLoaded');
 
     var windowWidth = $(window).width();
-    chartView(document.getElementById('mainChart'), windowWidth, 400, eventBus);
+
+    var dimensions = {
+        width: windowWidth,
+        height: 400
+    };
+
+    chartView(document.getElementById('mainChart'), dimensions, eventBus);
 
     requestSimulationData(emitDataLoaded);
 });

@@ -3,7 +3,6 @@ var pairExtent = require('./pairs.js').pairExtent;
 
 module.exports = function panAndZoom(element, sliderElement, visWin, model) {
 
-
     var fullDateRange = d3.extent(model.series, function (d) {
         return d.date;
     });

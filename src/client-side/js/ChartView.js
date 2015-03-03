@@ -34,22 +34,21 @@ module.exports = function chartView(chartElement, w, h, eventBus) {
 
     var visWin = visibleWindow(eventBus, dimensions, MARGIN);
 
+    function addRenderer(renderer, elementCss, rendererParams) {
+       renderer(eventBus, dChart.selectAll(elementCss), visWin, rendererParams || {});
+    }
+
+    addRenderer(chartAreaRenderer, '.chartArea');
+    addRenderer(goalsRenderer, '.goals');
+    addRenderer(arrowsRenderer, '.arrows');
+    addRenderer(xAxisRenderer, '.axes .x');
+    addRenderer(yAxisRenderer, '.axes .y');
+    addRenderer(startLineRenderer, '.startLine');
+    addRenderer(lineRenderer, 'path.median', {percentile: 50});
+    addRenderer(areaRenderer, 'path.moreLikely', {lowerPercentile: 30, upperPercentile: 70});
+    addRenderer(areaRenderer, 'path.lessLikely', {lowerPercentile: 10, upperPercentile: 90});
+
     eventBus.once('dataLoaded', function(model) {
-
-        function addRenderer(renderer, elementCss, rendererParams) {
-           // TODO: don't pass the model. Let renderers wait themselves for it to arrive
-           renderer(eventBus, dChart.selectAll(elementCss), visWin, model, rendererParams || {});
-        }
-
-        addRenderer(chartAreaRenderer, '.chartArea');
-        addRenderer(goalsRenderer, '.goals');
-        addRenderer(xAxisRenderer, '.axes .x');
-        addRenderer(yAxisRenderer, '.axes .y');
-        addRenderer(startLineRenderer, '.startLine');
-        addRenderer(lineRenderer, 'path.median', {percentile: 50});
-        addRenderer(areaRenderer, 'path.moreLikely', {lowerPercentile: 30, upperPercentile: 70});
-        addRenderer(areaRenderer, 'path.lessLikely', {lowerPercentile: 10, upperPercentile: 90});
-        addRenderer(arrowsRenderer, '.arrows');
 
         priceToolTipRenderer(
             eventBus,

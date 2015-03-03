@@ -6,9 +6,7 @@ var scale = require('./svgUtils.js').scale;
 
 var π = Math.PI, τ = 2 * π;
 
-module.exports = function goalsRenderer(eventBus, container, visWin, model) {
-
-    var goalsByDate = _.map(model.goalsByDate);
+module.exports = function goalsRenderer(eventBus, container, visWin) {
 
     var RADIUS = 24;
     var DENSITY_BOUNDARY = 9;
@@ -95,7 +93,7 @@ module.exports = function goalsRenderer(eventBus, container, visWin, model) {
         return (visWin.timeDensity() > DENSITY_BOUNDARY);
     }
 
-    function initGroupExpandAndCompact(dGoalGroups) {
+    function initGroupExpandAndCompact(dGoalGroups, isBig) {
         var compactGoalCluster = _.partial(multipleGoalOffset, true);
         var expandedGoalCluster = _.partial(multipleGoalOffset, false);
 
@@ -110,7 +108,7 @@ module.exports = function goalsRenderer(eventBus, container, visWin, model) {
 
                 d3.select(this)
                     .on('mouseenter', function () {
-                        if (isBig) {
+                        if (visibleWindowIsZoomedIn() ) {
                             goalsInGroup.transition().attr('transform', expandedGoalCluster);
                         }
                     })
@@ -120,7 +118,7 @@ module.exports = function goalsRenderer(eventBus, container, visWin, model) {
             });
     }
 
-    function createSvgForGoals() {
+    function createSvgForGoals(goalsByDate) {
         var dGoalGroups = container
             .selectAll('.goalsOnDate')
             .data(goalsByDate)
@@ -156,29 +154,37 @@ module.exports = function goalsRenderer(eventBus, container, visWin, model) {
 
     }
 
-    function updateFrame() {
-        var bigNow = visibleWindowIsZoomedIn();
+    initContainerOffset();
 
-        if( isBig !== bigNow ) {
-            isBig = bigNow;
-            applyZoomToGoalGroup(scalers.transition(), isBig);
+    function initForNewModel(model) {
+        var goalsByDate = _.map(model.goalsByDate);
+
+        createSvgForGoals(goalsByDate);
+        addProbabilityLabel(container.selectAll('.goals .mid .goal'));
+
+        var scalers = container.selectAll('.scaler');
+        var dGoalGroups = container.selectAll('.goalsOnDate');
+
+        var isBig = visibleWindowIsZoomedIn();
+
+        initGroupExpandAndCompact(dGoalGroups, isBig);
+
+        applyZoomToGoalGroup(scalers, isBig);
+
+        function updateFrame() {
+            var bigNow = visibleWindowIsZoomedIn();
+
+            if( isBig !== bigNow ) {
+                isBig = bigNow;
+                applyZoomToGoalGroup(scalers.transition(), isBig);
+            }
+
+            dGoalGroups.attr('transform', goalTranslate);
         }
-
-        dGoalGroups.attr('transform', goalTranslate);
+ª
+        eventBus.on('panOrZoom', updateFrame);
+        updateFrame();
     }
 
-    initContainerOffset();
-    createSvgForGoals();
-    addProbabilityLabel(container.selectAll('.goals .mid .goal'));
-
-    var scalers = container.selectAll('.scaler');
-    var dGoalGroups = container.selectAll('.goalsOnDate');
-
-    initGroupExpandAndCompact(dGoalGroups);
-
-    var isBig = visibleWindowIsZoomedIn();
-    applyZoomToGoalGroup(scalers, isBig);
-
-    eventBus.on('panOrZoom', updateFrame);
-    updateFrame();
+    eventBus.on('dataLoaded', initForNewModel);
 };

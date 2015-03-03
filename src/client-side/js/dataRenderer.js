@@ -1,5 +1,6 @@
 
 var d3 = require('d3');
+var _ = require('lodash');
 
 function xComponent(xScale) {
     return function(d) { return Math.round(xScale(d.date)) }
@@ -9,7 +10,7 @@ function yComponent(yScale, percentile) {
     return function(d) { return Math.round(yScale(d.percentiles[percentile])) };
 }
 
-function lineRenderer(eventBus, element, visWin, model, config) {
+function lineRenderer(eventBus, element, visWin, config, model) {
 
     var series = model.series;
     var percentile = config.percentile;
@@ -28,7 +29,7 @@ function lineRenderer(eventBus, element, visWin, model, config) {
     updateFrame();
 }
 
-function areaRenderer(eventBus, element, visWin, model, config) {
+function areaRenderer(eventBus, element, visWin, config, model) {
 
     var series = model.series;
     var upperPercentile = config.upperPercentile;
@@ -49,7 +50,13 @@ function areaRenderer(eventBus, element, visWin, model, config) {
     updateFrame();
 }
 
+function startRenderingWhenDataLoaded(renderer, eventBus, element, visWin, config) {
+    eventBus.on('dataLoaded', function(model) {
+        renderer(eventBus, element, visWin, config, model);
+    });
+}
+
 module.exports = {
-    line: lineRenderer,
-    area: areaRenderer
+    line: _.partial(startRenderingWhenDataLoaded, lineRenderer),
+    area: _.partial(startRenderingWhenDataLoaded, areaRenderer)
 };

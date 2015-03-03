@@ -1,16 +1,23 @@
-module.exports = function startLine(eventBus, element, visWin, model) {
-
-    var series = model.series;
-    var firstPoint = series[0];
+module.exports = function startLine(eventBus, element, visWin) {
 
     element.select('line').attr({
         y1: visWin.y.range()[0],
         y2: visWin.y.range()[1]
     });
 
-    element.select('circle').attr({
-        cy: visWin.y(firstPoint.percentiles[50])
-    });
+    var firstPoint;
+
+    function dataLoaded(model) {
+        var series = model.series;
+        firstPoint = series[0];
+
+        element.select('circle').attr({
+            cy: visWin.y(firstPoint.percentiles[50])
+        });
+
+        updateFrame();
+        eventBus.on('panOrZoom', updateFrame);
+    }
 
     function updateFrame() {
 
@@ -26,6 +33,5 @@ module.exports = function startLine(eventBus, element, visWin, model) {
         });
     }
 
-    eventBus.on('panOrZoom', updateFrame);
-    updateFrame();
+    eventBus.on('dataLoaded', dataLoaded);
 };

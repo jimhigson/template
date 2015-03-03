@@ -3,10 +3,9 @@ var d3 = require('d3');
 var $ = require('jquery');
 var _ = require('lodash');
 
-var pairExtent = require('./pairs.js').pairExtent;
-
 var visibleWindow = require('./visibleWindow.js');
 var goalsRenderer = require('./goalsRenderer.js');
+var chartAreaRenderer = require('./chartAreaRenderer.js');
 var xAxisRenderer = require('./xAxisRenderer.js');
 var yAxisRenderer = require('./yAxisRenderer.js');
 var startLineRenderer = require('./startLineRenderer.js');
@@ -15,7 +14,6 @@ var areaRenderer = require('./dataRenderer.js').area;
 var priceToolTipRenderer = require('./priceToolTipRenderer.js');
 var arrowsRenderer = require('./arrowsRenderer.js');
 var panAndZoom = require('./panAndZoom.js');
-
 
 module.exports = function chartView(chartElement, w, h, eventBus) {
 
@@ -43,14 +41,7 @@ module.exports = function chartView(chartElement, w, h, eventBus) {
            renderer(eventBus, dChart.select(elementCss), visWin, model, rendererParams || {});
         }
 
-        dChart.select('.chartArea')
-            .attr({
-                x: visWin.x.range()[0],
-                width: Math.abs(pairExtent(visWin.x.range())),
-                y: visWin.y.range()[1],
-                height: Math.abs(pairExtent(visWin.y.range()))
-            });
-
+        addRenderer(chartAreaRenderer, '.chartArea');
         addRenderer(goalsRenderer, '.goals');
         addRenderer(xAxisRenderer, '.axes .x');
         addRenderer(yAxisRenderer, '.axes .y');

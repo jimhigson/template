@@ -17,7 +17,7 @@ module.exports = function visibleWindow(bus, dimensions, MARGIN) {
         var scale = d3.time.scale()
             .range([MARGIN.left, dimensions.width - MARGIN.right]);
 
-        bus.on('dataLoaded', function(model) {
+        bus.on('lpChart:dataLoaded', function(model) {
             var series = model.series;
             var firstDate = series[0].date;
             var timeDomain = [firstDate, new Date(firstDate.getTime() + TIME_CONSTANTS.YEAR * 10)];
@@ -41,7 +41,7 @@ module.exports = function visibleWindow(bus, dimensions, MARGIN) {
         var scale = d3.scale.linear()
             .range(pixelRange);
 
-        bus.on('dataLoaded', function(model) {
+        bus.on('lpChart:dataLoaded', function(model) {
             var series = model.series;
             var minMoney = d3.min(series, function(point) { return point.percentiles[10] });
             var maxMoney = d3.max(series, function(point) { return point.percentiles[90] });

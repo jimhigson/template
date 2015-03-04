@@ -52,7 +52,7 @@ function chartView(chartElement, eventBus) {
     addRenderer(areaRenderer, 'path.moreLikely', {lowerPercentile: 30, upperPercentile: 70});
     addRenderer(areaRenderer, 'path.lessLikely', {lowerPercentile: 10, upperPercentile: 90});
 
-    eventBus.once('dataLoaded', function(model) {
+    eventBus.once('lpChart:dataLoaded', function(model) {
 
         priceToolTipRenderer(
             eventBus,
@@ -67,8 +67,3 @@ function chartView(chartElement, eventBus) {
 }
 
 module.exports = chartView;
-
-// also export to non-Browserify code. This may not be good practice but not clear how
-// else to export to a land that only understands global varialbes.
-window.chartView = chartView;
-

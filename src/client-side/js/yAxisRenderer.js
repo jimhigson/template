@@ -96,5 +96,5 @@ function render(element, visWin) {
 module.exports = function yAxisRenderer(eventBus, element, visWin) {
 
     // we don't care about panning, we need only render once when the data is loaded
-    eventBus.on('dataLoaded', render.bind(null, element, visWin));
+    eventBus.on('lpChart:dataLoaded', render.bind(null, element, visWin));
 };

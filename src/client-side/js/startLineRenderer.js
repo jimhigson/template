@@ -33,5 +33,5 @@ module.exports = function startLine(eventBus, element, visWin) {
         });
     }
 
-    eventBus.on('dataLoaded', dataLoaded);
+    eventBus.on('lpChart:dataLoaded', dataLoaded);
 };

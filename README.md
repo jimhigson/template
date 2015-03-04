@@ -38,7 +38,7 @@ TODO
 
 * [x] Browserify
 
-* [ ] move main.js into html. Browserify should only build a lib, not call it as well
+* [ ] move app.js into html. Browserify should only build a lib, not call it as well
     * [ ] Two browserify builds - one builds a lib, one builds an app including that lib
 
 * [ ] Change to gulp

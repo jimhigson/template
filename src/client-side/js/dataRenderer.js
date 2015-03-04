@@ -53,7 +53,7 @@ function areaRenderer(eventBus, element, visWin, config, model) {
 }
 
 function startRenderingWhenDataLoaded(renderer, eventBus, element, visWin, config) {
-    eventBus.on('dataLoaded', function(model) {
+    eventBus.on('lpChart:dataLoaded', function(model) {
         renderer(eventBus, element, visWin, config, model);
     });
 }

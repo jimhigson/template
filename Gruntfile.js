@@ -56,7 +56,7 @@ module.exports = function (grunt) {
                         debug: true
                     }
                 },
-                src: './src/client-side/js/main.js',
+                src: './src/client-side/js/app.js',
                 dest: './build/client-side/js/chart.js'
             }
         },

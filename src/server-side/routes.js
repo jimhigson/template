@@ -1,10 +1,13 @@
 var express = require('express'),
+    fs = require('fs'),
     consolidate = require('consolidate'),
     env = process.env.NODE_ENV,
     development = (env == 'development'),
 
     SCRIPTS = ['js/chart.js'],
-    STYLES = development ? ['css/main.css'] : ['css-min/all.css'];
+    STYLES = ['css/app.css'],
+
+    CHART_TEMPLATE = fs.readFileSync('src/server-side/views/chart.partial.html');
 
 module.exports = function routes(app) {
 
@@ -15,7 +18,8 @@ module.exports = function routes(app) {
 
         res.render('index', {
             scripts: SCRIPTS,
-            stylesheets: STYLES
+            stylesheets: STYLES,
+            chartTemplate: CHART_TEMPLATE
         });
     });
 

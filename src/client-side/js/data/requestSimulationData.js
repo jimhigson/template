@@ -15,7 +15,7 @@ module.exports = function requestSimulationData(eventBus) {
             }
         })
         .done(function(model){
-            eventBus.emit('dataLoaded', model);
+            eventBus.emit('lpChart:dataLoaded', model);
         })
         .fail(function(e){
             console.log(e);

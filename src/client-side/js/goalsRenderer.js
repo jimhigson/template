@@ -186,5 +186,5 @@ module.exports = function goalsRenderer(eventBus, container, visWin) {
         updateFrame();
     }
 
-    eventBus.on('dataLoaded', initForNewModel);
+    eventBus.on('lpChart:dataLoaded', initForNewModel);
 };

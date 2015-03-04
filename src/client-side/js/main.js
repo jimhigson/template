@@ -5,6 +5,6 @@ var chartView = require('./chartView.js');
 
 var eventBus = new EventEmitter;
 
-chartView(document.getElementById('mainChart'), eventBus);
+chartView('#mainChart', eventBus);
 
 requestSimulationData(eventBus);

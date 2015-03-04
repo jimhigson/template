@@ -15,12 +15,13 @@ var priceToolTipRenderer = require('./priceToolTipRenderer.js');
 var arrowsRenderer = require('./arrowsRenderer.js');
 var panAndZoom = require('./panAndZoom.js');
 
-
+/**
+ * @param chartElement css selector or Element for where to place the chart
+ * @param eventBus some kind of eventBus that follows the Node EventEmitter API
+ */
 function chartView(chartElement, eventBus) {
 
     var MARGIN = {top: 2, right: -25, bottom: 50, left: -25};
-
-    eventBus = eventBus || new EventEmitter();
 
     var dimensions = {
         width: $(chartElement).width(),

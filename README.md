@@ -36,6 +36,7 @@ TODO
 * [x] put mouse near line to see number in a tool thing
 * [x] adjust to window size
 * [x] Browserify
+* [ ] move main.js into html. Browserify should only build a lib, not call it as well
 * [ ] Move to event-bus based callbacks from viswin, not panAndZoom calling out to all renderers
 * [ ] Introduce karma/jasmine
     * [ ] Write some tests

@@ -99,7 +99,7 @@ module.exports = function xAxisRenderer(eventBus, element, visWin) {
 
         majorTicks.exit().remove();
         minorTicks.exit().remove();
-    }ª
+    }
 
     eventBus.on('panOrZoom', updateFrame);
 };

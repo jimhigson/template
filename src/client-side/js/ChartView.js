@@ -15,16 +15,24 @@ var priceToolTipRenderer = require('./priceToolTipRenderer.js');
 var arrowsRenderer = require('./arrowsRenderer.js');
 var panAndZoom = require('./panAndZoom.js');
 
-module.exports = function chartView(chartElement, dimensions, eventBus) {
+
+function chartView(chartElement, eventBus) {
 
     var MARGIN = {top: 2, right: -25, bottom: 50, left: -25};
+
+    eventBus = eventBus || new EventEmitter();
+
+    var dimensions = {
+        width: $(chartElement).width(),
+        height: $(chartElement).height()
+    };
 
     function setDimensions(dChart, dimensions) {
         dChart.attr(dimensions);
         dChart.select('rect.bg').attr(dimensions);
     }
 
-    var dChart = d3.select(chartElement);
+    var dChart = d3.select(chartElement).classed('chart', true);
     setDimensions(dChart, dimensions);
 
     var visWin = visibleWindow(eventBus, dimensions, MARGIN);
@@ -55,6 +63,11 @@ module.exports = function chartView(chartElement, dimensions, eventBus) {
 
         panAndZoom(dChart, $('#zoomer'), visWin, model);
     });
-};
+}
 
+module.exports = chartView;
+
+// also export to non-Browserify code. This may not be good practice but not clear how
+// else to export to a land that only understands global varialbes.
+window.chartView = chartView;
 

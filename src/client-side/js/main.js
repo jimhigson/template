@@ -1,22 +1,11 @@
-
-var $ = require('jquery');
-var requestSimulationData = require('./data/requestSimulationData.js');
-var chartView = require('./chartView.js');
 var event = require('node-event-emitter');
+var requestSimulationData = require('./data/requestSimulationData.js');
+var EventEmitter = require('node-event-emitter').EventEmitter;
+var chartView = require('./chartView.js');
 
-$(function() {
+var eventBus = new EventEmitter;
 
-    var eventBus = new event.EventEmitter;
-    var emitDataLoaded = eventBus.emit.bind(eventBus, 'dataLoaded');
 
-    var windowWidth = $(window).width();
+chartView(document.getElementById('mainChart'), eventBus);
 
-    var dimensions = {
-        width: windowWidth,
-        height: 400
-    };
-
-    chartView(document.getElementById('mainChart'), dimensions, eventBus);
-
-    requestSimulationData(emitDataLoaded);
-});
+requestSimulationData(eventBus);

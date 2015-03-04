@@ -1,7 +1,7 @@
 var oboe = require('oboe');
 var _ = require('lodash');
 
-module.exports = function requestSimulationData(callback) {
+module.exports = function requestSimulationData(eventBus) {
 
     oboe('sample_forecast.json')
         .node({
@@ -14,7 +14,9 @@ module.exports = function requestSimulationData(callback) {
                 goal.indexInDate = _.last(path);
             }
         })
-        .done(callback)
+        .done(function(model){
+            eventBus.emit('dataLoaded', model);
+        })
         .fail(function(e){
             console.log(e);
         });

@@ -9,10 +9,6 @@
             <link rel="stylesheet" href="{{this}}">
         {{/each}}
 
-        {{#each scripts}}
-            <script type="text/javascript" src="{{this}}"></script>
-        {{/each}}
-
     </head>
 
     <body>
@@ -77,4 +73,9 @@
         <img class="key" src="key.png">
 
     </body>
+
+    {{#each scripts}}
+        <script type="text/javascript" src="{{this}}"></script>
+    {{/each}}
+
 </html>

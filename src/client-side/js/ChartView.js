@@ -30,7 +30,7 @@ module.exports = function chartView(chartElement, dimensions, eventBus) {
     var visWin = visibleWindow(eventBus, dimensions, MARGIN);
 
     function addRenderer(renderer, elementCss, rendererParams) {
-       renderer(eventBus, dChart.selectAll(elementCss), visWin, rendererParams || {});
+       renderer(eventBus, dChart.selectAll(elementCss), visWin, rendererParams);
     }
 
     addRenderer(chartAreaRenderer, '.chartArea');

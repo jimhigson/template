@@ -17,7 +17,8 @@ function lineRenderer(eventBus, element, visWin, config, model) {
 
     var line = d3.svg.line()
         .x(xComponent(visWin.x))
-        .y(yComponent(visWin.y, percentile));
+        .y(yComponent(visWin.y, percentile))
+        .interpolate('monotone');
 
     function updateFrame() {
         element
@@ -38,7 +39,8 @@ function areaRenderer(eventBus, element, visWin, config, model) {
     var area = d3.svg.area()
         .x(xComponent(visWin.x))
         .y0(yComponent(visWin.y, lowerPercentile))
-        .y1(yComponent(visWin.y, upperPercentile));
+        .y1(yComponent(visWin.y, upperPercentile))
+        .interpolate('monotone');
 
     function updateFrame() {
         element
